@@ -2,7 +2,7 @@
 import { useTheme } from '@mui/material/styles';
 
 // project import
-import Logo from '@components/logo';
+import Logo from '@components/Logo';
 import DrawerHeaderStyled from './DrawerHeaderStyled';
 
 // ==============================|| DRAWER HEADER ||============================== //
