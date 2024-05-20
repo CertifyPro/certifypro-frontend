@@ -5,45 +5,13 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 
-import FileTextOutlined from '@ant-design/icons/FileTextOutlined';
-
 // project import
 import NavItem from './NavItem';
 import NavGroup from './NavGroup';
 
 import { useGetMenuMaster } from '@api/menu';
+import menuItems from '@menuItems';
 
-// data definition
-const menuItems = {
-  items: [{
-  id: 'group-certifications',
-  type: 'group',
-  children: [
-    {
-      id: 'certification',
-      title: 'Certifications',
-      type: 'collapse',
-      icon: FileTextOutlined,
-      breadcrumbs: false,
-      children: [
-        {
-          id: 'certification-list',
-          title: "My Certifications",
-          type: 'item',
-          url: '/certifications/list',
-          breadcrumbs: false
-        },
-        {
-          id: 'certification-create',
-          title: "New Certification",
-          type: 'item',
-          url: '/certifications/new',
-          breadcrumbs: false
-        },
-      ]
-    },
-  ]
-}]};
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 

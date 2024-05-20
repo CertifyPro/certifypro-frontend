@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 // material-ui
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
+// import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 
@@ -101,7 +101,7 @@ export default function NavGroup({
                   </Box>
                 )
               ) : (
-                <Divider sx={{ my: 0.5 }} />
+                null //<Divider sx={{ my: 0.5 }} />
               )}
             </>
           }
