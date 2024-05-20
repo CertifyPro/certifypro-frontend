@@ -18,6 +18,8 @@
     "@fontsource/inter": "^5.0.18",
     "@mui/material": "^5.15.18",
     "axios": "^1.6.8",
+    "docx": "^8.5.0",
+    "file-saver": "^2.0.5",
     "lodash.merge": "^4.6.2",
     "react": "^18.3.1",
     "react-device-detect": "^2.2.3",
@@ -27,6 +29,7 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@types/file-saver": "^2",
     "@types/lodash.merge": "^4",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
