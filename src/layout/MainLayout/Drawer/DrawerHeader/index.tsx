@@ -23,12 +23,12 @@ const DrawerHeader: React.FC<DrawerHeaderProps> = ({ open }) => {
         width: 'inherit',
         paddingTop: '8px',
         paddingBottom: '8px',
-        paddingLeft: open ? '24px' : 0
+        paddingLeft: open ? '24px' : 0,
       }}
     >
       <Logo sx={{ width: open ? 'auto' : 35, height: 35 }} isIcon={!open} />
     </DrawerHeaderStyled>
   );
-}
+};
 
 export default DrawerHeader;

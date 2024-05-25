@@ -31,22 +31,22 @@ const ThemeCustomization = ({ children }) => {
           sm: 768,
           md: 1024,
           lg: 1266,
-          xl: 1440
-        }
+          xl: 1440,
+        },
       },
       direction: themeDirection,
       mixins: {
         toolbar: {
           minHeight: 60,
           paddingTop: 8,
-          paddingBottom: 8
-        }
+          paddingBottom: 8,
+        },
       },
       palette: theme.palette,
       customShadows: themeCustomShadows,
-      typography: themeTypography
+      typography: themeTypography,
     }),
-    [themeDirection, theme, themeTypography, themeCustomShadows]
+    [themeDirection, theme, themeTypography, themeCustomShadows],
   );
 
   const themes = createTheme(themeOptions);
@@ -60,6 +60,6 @@ const ThemeCustomization = ({ children }) => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-}
+};
 
 export default ThemeCustomization;

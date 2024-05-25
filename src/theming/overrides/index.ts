@@ -11,11 +11,5 @@ import Typography from './Typography';
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
 export default function ComponentsOverrides(theme) {
-  return merge(
-    Button(theme),
-    ButtonBase(),
-    IconButton(theme),
-    LinearProgress(),
-    Typography()
-  );
+  return merge(Button(theme), ButtonBase(), IconButton(theme), LinearProgress(), Typography());
 }

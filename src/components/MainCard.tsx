@@ -14,7 +14,7 @@ import { ThemeMode } from '@config';
 // header style
 const headerSX = {
   p: 2.5,
-  '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
+  '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' },
 };
 
 function MainCard(
@@ -35,7 +35,7 @@ function MainCard(
     modal = false,
     ...others
   },
-  ref
+  ref,
 ) {
   const theme = useTheme();
   boxShadow = theme.palette.mode === ThemeMode.DARK ? boxShadow || true : boxShadow;
@@ -48,12 +48,15 @@ function MainCard(
         border: border ? '1px solid' : 'none',
         borderRadius: 1,
         borderColor: theme.palette.mode === ThemeMode.DARK ? 'divider' : 'grey.A800',
-        boxShadow: boxShadow && (!border || theme.palette.mode === ThemeMode.DARK) ? shadow || theme.customShadows.z1 : 'inherit',
+        boxShadow:
+          boxShadow && (!border || theme.palette.mode === ThemeMode.DARK)
+            ? shadow || theme.customShadows.z1
+            : 'inherit',
         ':hover': {
-          boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'
+          boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit',
         },
         ...(theme.palette.mode === ThemeMode.DARK && {
-          backgroundImage: 'none'
+          backgroundImage: 'none',
         }),
         ...(modal && {
           position: 'absolute',
@@ -64,19 +67,27 @@ function MainCard(
           '& .MuiCardContent-root': {
             overflowY: 'auto',
             minHeight: 'auto',
-            maxHeight: `calc(100vh - 200px)`
-          }
+            maxHeight: `calc(100vh - 200px)`,
+          },
         }),
-        ...sx
+        ...sx,
       }}
       ref={ref}
       {...others}
     >
       {/* card header and action */}
       {!darkTitle && title && (
-        <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} subheader={subheader} />
+        <CardHeader
+          sx={headerSX}
+          titleTypographyProps={{ variant: 'subtitle1' }}
+          title={title}
+          action={secondary}
+          subheader={subheader}
+        />
       )}
-      {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h4">{title}</Typography>} action={secondary} />}
+      {darkTitle && title && (
+        <CardHeader sx={headerSX} title={<Typography variant="h4">{title}</Typography>} action={secondary} />
+      )}
 
       {/* content & header divider */}
       {title && divider && <Divider />}

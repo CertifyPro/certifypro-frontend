@@ -11,14 +11,10 @@ import {
   convertInchesToTwip,
   Header,
   Footer,
-  VerticalAlign,
-  TextDirection,
-  HeadingLevel,
   PageNumber,
   HeightRule,
   ShadingType,
   AlignmentType,
-  LineRuleType,
 } from 'docx';
 import { saveAs } from 'file-saver';
 
@@ -34,7 +30,7 @@ import { APP_DEFAULT_PATH } from '@config';
 // assets
 import FileWordOutlined from '@ant-design/icons/FileWordOutlined';
 
-const inspectionReport = () => ({});
+// const inspectionReport = () => ({});
 
 const CertificationsCreatePage: React.FC = () => {
   const breadcrumbLinks = [

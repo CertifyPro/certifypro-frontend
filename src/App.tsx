@@ -11,11 +11,11 @@ function App() {
   return (
     <ThemeCustomization>
       <ScrollTop>
-          <RouterProvider router={router} />
-          {/* <PWABadge /> */}
+        <RouterProvider router={router} />
+        {/* <PWABadge /> */}
       </ScrollTop>
     </ThemeCustomization>
-  )
+  );
 }
 
-export default App
+export default App;

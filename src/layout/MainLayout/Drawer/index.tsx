@@ -48,8 +48,8 @@ export default function MainDrawer({ window }) {
               borderRight: '1px solid',
               borderRightColor: 'divider',
               backgroundImage: 'none',
-              boxShadow: 'inherit'
-            }
+              boxShadow: 'inherit',
+            },
           }}
         >
           {drawerHeader}

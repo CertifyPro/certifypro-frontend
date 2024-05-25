@@ -12,7 +12,6 @@ import NavGroup from './NavGroup';
 import { useGetMenuMaster } from '@api/menu';
 import menuItems from '@menuItems';
 
-
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 export default function Navigation() {
@@ -57,8 +56,8 @@ export default function Navigation() {
     <Box
       sx={{
         pt: drawerOpen ? 2 : 0,
-        ...({ '& > ul:first-of-type': { mt: 0 } }),
-        display: 'block'
+        ...{ '& > ul:first-of-type': { mt: 0 } },
+        display: 'block',
       }}
     >
       {navGroups}

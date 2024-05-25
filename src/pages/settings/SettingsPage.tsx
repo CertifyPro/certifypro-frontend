@@ -17,21 +17,21 @@ const SettingsPage: React.FC = () => {
     <>
       <Breadcrumbs custom heading="Settings" links={breadcrumbLinks} />
       <Stack direction="column" spacing={1.25}>
-      <Stack direction="row" spacing={1.25} alignItems="center">
-        <HighlightOutlined />
-        <Stack>
-          <Typography variant="subtitle1" color="text.primary">
-            Theme Mode
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Choose light or dark mode
-          </Typography>
+        <Stack direction="row" spacing={1.25} alignItems="center">
+          <HighlightOutlined />
+          <Stack>
+            <Typography variant="subtitle1" color="text.primary">
+              Theme Mode
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Choose light or dark mode
+            </Typography>
+          </Stack>
         </Stack>
-     </Stack>
-     <ThemeModeSettings />
-     </Stack>
+        <ThemeModeSettings />
+      </Stack>
     </>
-  )
+  );
 };
 
 export default SettingsPage;

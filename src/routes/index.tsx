@@ -26,30 +26,30 @@ const router = createBrowserRouter(
           children: [
             {
               path: 'all',
-              element: <CertificationsPage />
+              element: <CertificationsPage />,
             },
             {
               path: 'new',
-              element: <CertificationsCreatePage />
+              element: <CertificationsCreatePage />,
             },
             {
               path: 'details/:id',
-              element: <CertificationsCreatePage />
+              element: <CertificationsCreatePage />,
             },
             {
               path: 'edit/:id',
-              element: <CertificationsCreatePage />
+              element: <CertificationsCreatePage />,
             },
-          ]
+          ],
         },
         {
           path: 'settings',
-          element: <SettingsPage />
-        }
-      ]
-    }
+          element: <SettingsPage />,
+        },
+      ],
+    },
   ],
-  { basename: import.meta.env.VITE_APP_BASE_NAME }
+  { basename: import.meta.env.VITE_APP_BASE_NAME },
 );
 
 export default router;

@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import Loader from './Loader';
 
 // ==============================|| LOADABLE - LAZY LOADING ||============================== //
-// eslint-disable-next-line 
+// eslint-disable-next-line
 const Loadable = (Component) => (props) => {
   return (
     <Suspense fallback={<Loader />}>

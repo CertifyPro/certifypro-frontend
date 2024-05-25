@@ -13,13 +13,7 @@ import NavCollapse from './NavCollapse';
 
 import { useGetMenuMaster } from '@api/menu';
 
-export default function NavGroup({
-  item,
-  setSelectedItems,
-  selectedItems,
-  setSelectedLevel,
-  selectedLevel
-}) {
+export default function NavGroup({ item, setSelectedItems, selectedItems, setSelectedLevel, selectedLevel }) {
   const { pathname } = useLocation();
 
   const { menuMaster } = useGetMenuMaster();
@@ -84,30 +78,29 @@ export default function NavGroup({
   });
 
   return (
-        <List
-          subheader={
-            <>
-              {item.title ? (
-                drawerOpen && (
-                  <Box sx={{ pl: 3, mb: 1.5 }}>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      {item.title}
+    <List
+      subheader={
+        <>
+          {item.title
+            ? drawerOpen && (
+                <Box sx={{ pl: 3, mb: 1.5 }}>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    {item.title}
+                  </Typography>
+                  {item.caption && (
+                    <Typography variant="caption" color="secondary">
+                      {item.caption}
                     </Typography>
-                    {item.caption && (
-                      <Typography variant="caption" color="secondary">
-                        {item.caption}
-                      </Typography>
-                    )}
-                  </Box>
-                )
-              ) : (
-                null //<Divider sx={{ my: 0.5 }} />
-              )}
-            </>
+                  )}
+                </Box>
+              )
+            : null //<Divider sx={{ my: 0.5 }} />
           }
-          sx={{ mt: drawerOpen && item.title ? 1.5 : 0, py: 0, zIndex: 0 }}
-        >
-          {navCollapse}
-        </List>
+        </>
+      }
+      sx={{ mt: drawerOpen && item.title ? 1.5 : 0, py: 0, zIndex: 0 }}
+    >
+      {navCollapse}
+    </List>
   );
 }

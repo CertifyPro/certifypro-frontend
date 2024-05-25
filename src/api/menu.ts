@@ -6,20 +6,20 @@ import { fetcher } from '@utils/axios';
 
 const initialState = {
   isDashboardDrawerOpened: false,
-  isComponentDrawerOpened: true
+  isComponentDrawerOpened: true,
 };
 
 export const endpoints = {
   key: 'api/menu',
   master: 'master',
-  dashboard: '/dashboard' // server URL
+  dashboard: '/dashboard', // server URL
 };
 
 export function useGetMenu() {
   const { data, isLoading, error, isValidating } = useSWR(endpoints.key + endpoints.dashboard, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
   });
 
   const memoizedValue = useMemo(
@@ -28,9 +28,9 @@ export function useGetMenu() {
       menuLoading: isLoading,
       menuError: error,
       menuValidating: isValidating,
-      menuEmpty: !isLoading && !data?.length
+      menuEmpty: !isLoading && !data?.length,
     }),
-    [data, error, isLoading, isValidating]
+    [data, error, isLoading, isValidating],
   );
 
   return memoizedValue;
@@ -40,15 +40,15 @@ export function useGetMenuMaster() {
   const { data, isLoading } = useSWR(endpoints.key + endpoints.master, () => initialState, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
   });
 
   const memoizedValue = useMemo(
     () => ({
       menuMaster: data,
-      menuMasterLoading: isLoading
+      menuMasterLoading: isLoading,
     }),
-    [data, isLoading]
+    [data, isLoading],
   );
 
   return memoizedValue;
@@ -62,7 +62,7 @@ export function handlerComponentDrawer(isComponentDrawerOpened) {
     (currentMenuMaster) => {
       return { ...currentMenuMaster, isComponentDrawerOpened };
     },
-    false
+    false,
   );
 }
 
@@ -74,6 +74,6 @@ export function handlerDrawerOpen(isDashboardDrawerOpened) {
     (currentMenuMaster) => {
       return { ...currentMenuMaster, isDashboardDrawerOpened };
     },
-    false
+    false,
   );
 }

@@ -17,29 +17,30 @@ const menuItems = {
           children: [
             {
               id: 'certification-create',
-              title: "Create",
+              title: 'Create',
               type: 'item',
               url: '/certifications/new',
               breadcrumbs: false,
             },
-          ]
+          ],
         },
-      ]
-    }, {
-        id: 'settings',
-        type: 'group',
-        children: [
-          {
-            id: 'settings',
-            title: "Settings",
-            type: 'item',
-            breadcrumbs: false,
-            icon: SettingOutlined,
-            url: '/settings',
-          },
-        ]
-    }
-  ]
+      ],
+    },
+    {
+      id: 'settings',
+      type: 'group',
+      children: [
+        {
+          id: 'settings',
+          title: 'Settings',
+          type: 'item',
+          breadcrumbs: false,
+          icon: SettingOutlined,
+          url: '/settings',
+        },
+      ],
+    },
+  ],
 };
 
 export default menuItems;

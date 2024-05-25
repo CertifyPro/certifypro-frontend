@@ -43,7 +43,7 @@ export default function Breadcrumbs({
     marginLeft: 0,
     width: '1rem',
     height: '1rem',
-    color: theme.palette.secondary.main
+    color: theme.palette.secondary.main,
   };
 
   useEffect(() => {

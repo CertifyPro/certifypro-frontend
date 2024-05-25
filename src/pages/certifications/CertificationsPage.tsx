@@ -10,7 +10,7 @@ const CertificationsPage: React.FC = () => {
     <>
       <Breadcrumbs custom heading="My Certifications" links={breadcrumbLinks} />
     </>
-  )
+  );
 };
 
 export default CertificationsPage;

@@ -17,15 +17,15 @@ function getColorStyle({ variant, theme, color }) {
 
   const commonShadow = {
     '&::after': {
-      boxShadow: `0 0 6px 6px ${alpha(main, 0.9)}`
+      boxShadow: `0 0 6px 6px ${alpha(main, 0.9)}`,
     },
     '&:active::after': {
-      boxShadow: `0 0 0 0 ${alpha(main, 0.9)}`
+      boxShadow: `0 0 0 0 ${alpha(main, 0.9)}`,
     },
     '&:focus-visible': {
       outline: `2px solid ${dark}`,
-      outlineOffset: 2
-    }
+      outlineOffset: 2,
+    },
   };
 
   switch (variant) {
@@ -34,18 +34,18 @@ function getColorStyle({ variant, theme, color }) {
         color: contrastText,
         background: main,
         '&:hover': {
-          background: dark
+          background: dark,
         },
-        ...commonShadow
+        ...commonShadow,
       };
     case 'light':
       return {
         color: main,
         background: lighter,
         '&:hover': {
-          background: alpha(light, 0.5)
+          background: alpha(light, 0.5),
         },
-        ...commonShadow
+        ...commonShadow,
       };
     case 'shadow':
       return {
@@ -54,36 +54,36 @@ function getColorStyle({ variant, theme, color }) {
         background: main,
         '&:hover': {
           boxShadow: 'none',
-          background: dark
+          background: dark,
         },
-        ...commonShadow
+        ...commonShadow,
       };
     case 'outlined':
       return {
         '&:hover': {
           background: 'transparent',
           color: dark,
-          borderColor: dark
+          borderColor: dark,
         },
-        ...commonShadow
+        ...commonShadow,
       };
     case 'dashed':
       return {
         background: lighter,
         '&:hover': {
           color: dark,
-          borderColor: dark
+          borderColor: dark,
         },
-        ...commonShadow
+        ...commonShadow,
       };
     case 'text':
     default:
       return {
         '&:hover': {
           color: dark,
-          background: lighter
+          background: lighter,
         },
-        ...commonShadow
+        ...commonShadow,
       };
   }
 }
@@ -101,7 +101,7 @@ const IconButtonStyle = styled(MuiIconButton, { shouldForwardProp: (prop) => pro
       height: '100%',
       borderRadius: shape === 'rounded' ? '50%' : 4,
       opacity: 0,
-      transition: 'all 0.5s'
+      transition: 'all 0.5s',
     },
 
     ':active::after': {
@@ -110,26 +110,26 @@ const IconButtonStyle = styled(MuiIconButton, { shouldForwardProp: (prop) => pro
       left: 0,
       top: 0,
       opacity: 1,
-      transition: '0s'
+      transition: '0s',
     },
     ...(shape === 'rounded' && {
-      borderRadius: '50%'
+      borderRadius: '50%',
     }),
     ...(variant === 'outlined' && {
       border: '1px solid',
-      borderColor: 'inherit'
+      borderColor: 'inherit',
     }),
     ...(variant === 'dashed' && {
       border: '1px dashed',
-      borderColor: 'inherit'
+      borderColor: 'inherit',
     }),
     ...(variant !== 'text' && {
       '&.Mui-disabled': {
-        background: theme.palette.grey[200]
-      }
+        background: theme.palette.grey[200],
+      },
     }),
-    ...getColorStyle({ variant, theme, color })
-  })
+    ...getColorStyle({ variant, theme, color }),
+  }),
 );
 
 function IconButton({ variant = 'text', shape = 'square', children, color = 'primary', ...others }, ref) {

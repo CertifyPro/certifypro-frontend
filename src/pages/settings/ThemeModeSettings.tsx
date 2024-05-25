@@ -44,7 +44,12 @@ export default function ThemeModeSettings() {
                 {...(mode === ThemeMode.LIGHT && { boxShadow: true, shadow: theme.customShadows.primary })}
               >
                 <Stack spacing={1.25} alignItems="center">
-                  <CardMedia component="img" src={defaultLayout} alt="Vertical" sx={{ borderRadius: 1, width: 64, height: 64 }} />
+                  <CardMedia
+                    component="img"
+                    src={defaultLayout}
+                    alt="Vertical"
+                    sx={{ borderRadius: 1, width: 64, height: 64 }}
+                  />
                   <Typography variant="caption">Light</Typography>
                 </Stack>
               </MainCard>
@@ -63,7 +68,12 @@ export default function ThemeModeSettings() {
                 {...(mode === ThemeMode.DARK && { boxShadow: true, shadow: theme.customShadows.primary })}
               >
                 <Stack spacing={1.25} alignItems="center">
-                  <CardMedia component="img" src={darkLayout} alt="Vertical" sx={{ borderRadius: 1, width: 64, height: 64 }} />
+                  <CardMedia
+                    component="img"
+                    src={darkLayout}
+                    alt="Vertical"
+                    sx={{ borderRadius: 1, width: 64, height: 64 }}
+                  />
                   <Typography variant="caption">Dark</Typography>
                 </Stack>
               </MainCard>
