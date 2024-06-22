@@ -13,13 +13,12 @@ import {
   AlignmentType,
   Document,
   Packer,
-  Header,
-  Footer,
-  PageNumber,
 } from 'docx';
 import { saveAs } from 'file-saver';
+
 import Certificate from './Certificate';
 import { InspectionCategory, InspectionArticleFieldValue } from './Certificate';
+import { createTemplateFooter, createTemplateHeader, templateStyles } from './LiftingMachineDocXTemplate';
 
 type InspectionArticleColumns = {
   title: string;
@@ -240,95 +239,14 @@ export const downloadCertificate = async (certificate: Certificate) => {
 
   // Create a new Document
   const doc = new Document({
-    styles: {
-      default: {
-        document: {
-          run: {
-            size: 14,
-            characterSpacing: 11,
-          },
-          paragraph: {
-            alignment: AlignmentType.LEFT,
-            spacing: {
-              line: 240,
-              before: 40,
-              after: 40,
-            },
-          },
-        },
-      },
-      paragraphStyles: [
-        {
-          id: 'pagination',
-          name: 'Pagination',
-          basedOn: 'Normal',
-          next: 'Normal',
-          run: {
-            size: 16,
-            characterSpacing: 11,
-            bold: true,
-          },
-          paragraph: {
-            alignment: AlignmentType.RIGHT,
-          },
-        },
-        {
-          id: 'tableHeader',
-          name: 'Table Header',
-          basedOn: 'Normal',
-          next: 'Normal',
-          run: {
-            bold: true,
-            size: 14,
-          },
-          paragraph: {
-            alignment: AlignmentType.CENTER,
-          },
-        },
-        {
-          id: 'tableContent',
-          name: 'Table Content',
-          basedOn: 'Normal',
-          next: 'Normal',
-          run: {
-            bold: true,
-            size: 14,
-          },
-        },
-        {
-          id: 'tableTitle',
-          name: 'Table Title',
-          basedOn: 'Normal',
-          next: 'Normal',
-          run: {
-            bold: true,
-            size: 16,
-            font: 'Arial',
-          },
-          paragraph: {
-            alignment: AlignmentType.CENTER,
-          },
-        },
-      ],
-    },
+    styles: templateStyles,
     sections: [
       {
         headers: {
-          default: new Header({ children: [] }),
+          default: createTemplateHeader(),
         },
         footers: {
-          default: new Footer({
-            children: [
-              new Paragraph({
-                style: 'pagination',
-                children: [
-                  new TextRun({
-                    children: ['σελ. ', PageNumber.CURRENT, ' από ', PageNumber.TOTAL_PAGES],
-                  }),
-                ],
-              }),
-            ],
-          }),
+          default: createTemplateFooter(),
         },
         properties: {
           page: {
@@ -337,6 +255,8 @@ export const downloadCertificate = async (certificate: Certificate) => {
               bottom: `0.25cm`,
               left: `1.5cm`,
               right: `1.5cm`,
+              footer: `0.5cm`,
+              header: `0.5cm`,
             },
           },
         },

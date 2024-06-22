@@ -24,7 +24,9 @@
 
     "paths": {
       "@config": ["config.ts"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@layout/*": ["layout/*"],
+      "@pages/*": ["pages/*"]
     }
   },
   "include": ["vite-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
