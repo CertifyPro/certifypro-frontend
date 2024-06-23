@@ -11,7 +11,7 @@ import {
   TabStopPosition,
 } from 'docx';
 
-import { esydLogob64 } from './assets';
+import { esydLogoB64 } from './assets';
 
 export const createTemplateFooter = () => {
   return new Footer({
@@ -20,7 +20,7 @@ export const createTemplateFooter = () => {
         style: 'footer',
         children: [
           new ImageRun({
-            data: esydLogob64,
+            data: esydLogoB64,
             transformation: {
               width: 65,
               height: 35,

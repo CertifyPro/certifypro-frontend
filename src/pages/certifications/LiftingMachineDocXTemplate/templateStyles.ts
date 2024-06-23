@@ -1,4 +1,4 @@
-import { AlignmentType, LineRuleType } from 'docx';
+import { AlignmentType, LineRuleType, UnderlineType } from 'docx';
 
 export const templateStyles = {
   default: {
@@ -29,7 +29,7 @@ export const templateStyles = {
       paragraph: {
         alignment: AlignmentType.LEFT,
         spacing: {
-          line: 120,
+          line: 40,
           lineRule: LineRuleType.EXACT,
         },
       },
@@ -67,6 +67,22 @@ export const templateStyles = {
       },
     },
     {
+      id: 'inspectionTitle',
+      name: 'Inspection Title',
+      basedOn: 'Normal',
+      next: 'Normal',
+      run: {
+        size: 20,
+        bold: true,
+        underline: {
+          type: UnderlineType.SINGLE,
+        },
+      },
+      paragraph: {
+        alignment: AlignmentType.CENTER,
+      },
+    },
+    {
       id: 'tableHeader',
       name: 'Table Header',
       basedOn: 'Normal',
@@ -100,7 +116,7 @@ export const templateStyles = {
         font: 'Arial',
       },
       paragraph: {
-        alignment: AlignmentType.CENTER,
+        alignment: AlignmentType.LEFT,
       },
     },
   ],

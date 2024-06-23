@@ -9,9 +9,10 @@ import {
   TabStopPosition,
   TabStopType,
   Tab,
+  AlignmentType,
 } from 'docx';
 
-import { moodyLogob64 } from './assets';
+import { moodyLogoB64, moodyHellasBackgroundB64 } from './assets';
 
 export const createTemplateHeader = () => {
   return new Header({
@@ -20,7 +21,29 @@ export const createTemplateHeader = () => {
         style: 'headerImage',
         children: [
           new ImageRun({
-            data: moodyLogob64,
+            data: moodyHellasBackgroundB64,
+            transformation: {
+              width: 793,
+              height: 1122,
+            },
+            floating: {
+              horizontalPosition: {
+                offset: 0,
+              },
+              verticalPosition: {
+                offset: 0,
+              },
+              behindDocument: true,
+            },
+          }),
+        ],
+        alignment: AlignmentType.CENTER,
+      }),
+      new Paragraph({
+        style: 'headerImage',
+        children: [
+          new ImageRun({
+            data: moodyLogoB64,
             transformation: {
               width: 94,
               height: 99,

@@ -1,190 +1,24 @@
 import {
-  Paragraph,
-  TextRun,
-  Table,
-  TableRow,
-  TableCell,
-  WidthType,
-  convertMillimetersToTwip,
-  convertInchesToTwip,
-  HeightRule,
-  ShadingType,
-  ILevelParagraphStylePropertiesOptions,
   AlignmentType,
+  BorderStyle,
   Document,
   Packer,
+  Paragraph,
+  Table,
+  TableCell,
+  TableRow,
+  TextRun,
+  WidthType,
 } from 'docx';
 import { saveAs } from 'file-saver';
 
 import Certificate from './Certificate';
-import { InspectionCategory, InspectionArticleFieldValue } from './Certificate';
-import { createTemplateFooter, createTemplateHeader, templateStyles } from './LiftingMachineDocXTemplate';
-
-type InspectionArticleColumns = {
-  title: string;
-  width: number;
-  contentAlignment: ILevelParagraphStylePropertiesOptions['alignment'];
-};
-
-// Function to create a data cell with specific width
-const createInspectionArticleTableCell = (
-  text: string,
-  alignment: ILevelParagraphStylePropertiesOptions['alignment'],
-  rowSpan?: number,
-  columnSpan?: number,
-) =>
-  new TableCell({
-    children: [new Paragraph({ text, alignment, style: 'tableContent' })],
-    margins: {
-      top: convertInchesToTwip(0.056), // Padding in twips (1/20th of a point), so 10 points is 200 twips
-      bottom: convertInchesToTwip(0.056),
-      left: convertInchesToTwip(0.056),
-      right: convertInchesToTwip(0.056),
-    },
-    rowSpan,
-    columnSpan,
-  });
-
-export const createInspectionArticleTable = (
-  inspectionArticleColumns: InspectionArticleColumns[],
-  inspectionArticleCellHeight: number,
-  inspectionArticleCellMargin: number,
-  inspectionCategory: InspectionCategory,
-) => {
-  // Create the table with the header row and data rows
-  return [
-    new Paragraph({
-      style: 'tableTitle',
-      children: [new TextRun({ text: inspectionCategory.name }), new TextRun({ text: ' ', break: 1, size: 8 })],
-    }),
-    new Table({
-      rows: [
-        // header row
-        new TableRow({
-          children: inspectionArticleColumns.map(
-            (inspectionArticleColumn) =>
-              new TableCell({
-                children: [
-                  new Paragraph({
-                    text: inspectionArticleColumn.title,
-                    style: 'tableHeader',
-                  }),
-                ],
-                margins: {
-                  top: convertInchesToTwip(inspectionArticleCellMargin),
-                  bottom: convertInchesToTwip(inspectionArticleCellMargin),
-                  left: convertInchesToTwip(inspectionArticleCellMargin),
-                  right: convertInchesToTwip(inspectionArticleCellMargin),
-                },
-                shading: {
-                  type: ShadingType.CLEAR,
-                  color: 'auto',
-                  fill: 'E0E0E0',
-                },
-              }),
-          ),
-          tableHeader: true,
-          height: {
-            value: convertInchesToTwip(inspectionArticleCellHeight),
-            rule: HeightRule.ATLEAST,
-          },
-        }),
-        ...(() => {
-          const dataRows = [];
-          for (const inspectionArticle of inspectionCategory.inspectionArticles) {
-            let currentColumnIndex = 0;
-            let dataCells = [
-              createInspectionArticleTableCell(
-                inspectionArticle.articleNumber,
-                inspectionArticleColumns[currentColumnIndex].contentAlignment,
-                inspectionArticle.fields.length,
-                0,
-              ),
-            ];
-            for (const field of inspectionArticle.fields) {
-              currentColumnIndex = 1;
-
-              if (typeof field === 'string') {
-                dataCells.push(
-                  createInspectionArticleTableCell(field, AlignmentType.CENTER, 0, inspectionArticleColumns.length - 1),
-                );
-              }
-
-              if (typeof field === 'object') {
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.description,
-                    inspectionArticleColumns[currentColumnIndex].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.inspectionType,
-                    inspectionArticleColumns[currentColumnIndex + 1].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.inspectionKind,
-                    inspectionArticleColumns[currentColumnIndex + 2].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.OK ? 'X' : '',
-                    inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
-                    inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.NA ? 'X' : '',
-                    inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.comments,
-                    inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
-                  ),
-                );
-              }
-              dataRows.push(
-                new TableRow({
-                  children: dataCells,
-                  height: {
-                    value: convertInchesToTwip(inspectionArticleCellHeight),
-                    rule: HeightRule.ATLEAST,
-                  },
-                }),
-              );
-              dataCells = [];
-            }
-          }
-          return dataRows;
-        })(),
-      ],
-      width: {
-        size: 100,
-        type: WidthType.PERCENTAGE,
-      },
-      columnWidths: inspectionArticleColumns.map((inspectionColumn) =>
-        convertMillimetersToTwip(inspectionColumn.width),
-      ),
-    }),
-    new Paragraph({
-      children: [new TextRun({ text: '', size: 8 })],
-    }),
-    new Paragraph({
-      children: [new TextRun({ text: '', size: 8 })],
-    }),
-  ];
-};
+import {
+  createTemplateFooter,
+  createTemplateHeader,
+  createInspectionArticleTable,
+  templateStyles,
+} from './LiftingMachineDocXTemplate';
 
 export const downloadCertificate = async (certificate: Certificate) => {
   const tableInfoArticleTableConfig = {
@@ -260,7 +94,81 @@ export const downloadCertificate = async (certificate: Certificate) => {
             },
           },
         },
-        children: [...table0, ...table1, ...table2, ...table3, ...table4],
+        children: [
+          new Paragraph({
+            style: 'inspectionTitle',
+            children: [new TextRun({ text: 'ΕΚΘΕΣΗ ΕΠΙΘΕΩΡΗΣΗΣ' })],
+          }),
+          ...table0,
+          ...table1,
+          ...table2,
+          ...table3,
+          ...table4,
+          new Table({
+            rows: [
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({
+                        children: [
+                          new TextRun({ text: 'ΤΥΠΟΣ ΕΛΕΓΧΟΥ', bold: true, size: 16 }),
+                          new TextRun({ text: 'ΑΑ: Αρχικός έλεγχος', bold: true, size: 16, break: 1 }),
+                          new TextRun({ text: 'Α & Β: Επανέλεγχος', bold: true, size: 16, break: 1 }),
+                        ],
+                      }),
+                    ],
+                    borders: {
+                      top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      bottom: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                    },
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({
+                        children: [
+                          new TextRun({ text: 'ΕΙΔΟΣ ΕΛΕΓΧΟΥ', bold: true, size: 16 }),
+                          new TextRun({
+                            text: 'Ο: Οπτικός έλεγχος ή/και ανασκόπηση εγγράφων',
+                            bold: true,
+                            size: 16,
+                            break: 1,
+                          }),
+                          new TextRun({ text: 'Λ: Λειτουργικός έλεγχος', bold: true, size: 16, break: 1 }),
+                          new TextRun({ text: 'Α: Ανασκόπηση εγγράφων', bold: true, size: 16, break: 1 }),
+                        ],
+                      }),
+                    ],
+                    borders: {
+                      top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      bottom: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                      right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+                    },
+                  }),
+                  new TableCell({
+                    children: [],
+                  }),
+                ],
+              }),
+            ],
+            width: {
+              size: 100,
+              type: WidthType.PERCENTAGE,
+            },
+            columnWidths: [2000, 3600, 4000],
+            borders: {
+              top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+              bottom: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+              left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+              right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+              insideHorizontal: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+              insideVertical: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+            },
+          }),
+        ],
       },
     ],
   });
