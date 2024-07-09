@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 // project import
 import Breadcrumbs from '@components/@extended/Breadcrumbs';
 import { APP_DEFAULT_PATH } from '@config';
-import Certificate from './Certificate';
+import Certificate, { InspectionCheckType } from './Certificate';
 import { downloadCertificate } from './CertificateToDocX';
 
 // assets
@@ -19,7 +19,7 @@ const CertificationsCreatePage: React.FC = () => {
   ];
 
   const onDownloadCertificate = async () => {
-    const certificate = new Certificate(undefined, undefined, undefined);
+    const certificate = new Certificate(undefined, undefined, InspectionCheckType.AA);
     console.log(certificate);
     await downloadCertificate(certificate);
   };

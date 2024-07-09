@@ -19,12 +19,23 @@ export enum InspectionArticleFieldValue {
   NA = 'N/A',
 }
 
+export enum InspectionCheckType {
+  AA,
+  A,
+  B,
+}
+
 type InspectionArticleField = {
   description: string;
   inspectionType: InspectionType;
   inspectionKind: InspectionKind;
-  value?: InspectionArticleFieldValue;
-  comments: string;
+  templateValues: Record<
+    InspectionCheckType | 'DEFAULT',
+    {
+      value?: InspectionArticleFieldValue;
+      comments: string;
+    }
+  >;
 };
 
 type InpsectionArticleSubCategory = string;
@@ -46,12 +57,6 @@ type InspectionReport = {
 enum CertificateStatusType {
   SUCCESS,
   FAIL,
-}
-
-enum InspectionCheckType {
-  AA,
-  A,
-  B,
 }
 
 class Certificate {
@@ -82,8 +87,24 @@ class Certificate {
                   description: 'ΜΕΛΕΤΗ – ΣΧΕΔΙΑΓΡΑΜΜΑTA (ΕΛΕΓΧΟΣ ΠΛΗΡΟΤΗΤΑΣ ΜΕΛΕΤΗΣ)',
                   inspectionType: InspectionType.AA,
                   inspectionKind: InspectionKind.A,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σύμφωνα με το βιβλίο του κατασκευαστή και την μελέτη έδρασης του γερανού',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -95,8 +116,24 @@ class Certificate {
                     'ΠΙΣΤΟΠΟΙΗΤΙΚΑ (ΔΗΛΩΣΗ CE, ΕΞΑΡΤΗΜΑΤΑ, ΥΛΙΚΑ – ΕΛΕΓΧΟΣ ΤΑΥΤΙΣΗΣ ΜΕ ΤΑ ΕΓΚΑΤΕΣΤΗΜΕΝΑ ΥΛΙΚΑ)',
                   inspectionType: InspectionType.AA,
                   inspectionKind: InspectionKind.A,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σήμανση CE & πιστοποιητικό από τον κατασκευαστή (FASSI)',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -107,8 +144,24 @@ class Certificate {
                   description: 'ΕΓΧΕΙΡΙΔΙΟ ΛΕΙΤΟΥΡΓΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -119,8 +172,24 @@ class Certificate {
                   description: 'ΒΙΒΛΙΟ ΣΥΝΤΗΡΗΣΗΣ & ΕΛΕΓΧΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Τηρείται στο αρχείο του πελάτη από την FASSI έναρξη 9ος 2022',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Τηρείται στο αρχείο του πελάτη από την FASSI έναρξη 9ος 2022',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Τηρείται στο αρχείο του πελάτη από την FASSI έναρξη 9ος 2022',
+                    },
+                  },
                 },
               ],
             },
@@ -131,8 +200,24 @@ class Certificate {
                   description: 'ΑΔΕΙΟΥΧΟΣ ΧΕΙΡΙΣΤΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -144,8 +229,24 @@ class Certificate {
                   description: 'ΠΙΝΑΚΙΔΙΟ ΣΤΟΙΧΕΙΩΝ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -156,8 +257,24 @@ class Certificate {
                   description: 'ΈΝΔΕΙΞΗ ΑΝΥΨΩΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σε διαγράμματα εντός της καμπίνας',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σε διαγράμματα εντός της καμπίνας',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σε διαγράμματα εντός της καμπίνας',
+                    },
+                  },
                 },
               ],
             },
@@ -168,8 +285,24 @@ class Certificate {
                   description: 'ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΕΣ ΣΗΜΑΝΣΕΙΣ - ΜΕΤΡΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -181,15 +314,47 @@ class Certificate {
                   description: 'ΟΠΤΙΚΟΣ ΕΛΕΓΧΟΣ ΚΑΤΑΣΤΑΣΗΣ & ΜΕΤΑΤΡΟΠΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.NA,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
                 {
                   description: 'ΈΛΕΓΧΟΣ ΣΥΜΜΟΡΦΩΣΗΣ ΜΕ ΣΧΕΔΙΑ, ΜΕΛΕΤΗ & ΠΙΣΤΟΠΟΙΗΤΙΚΑ',
                   inspectionType: InspectionType.AA,
                   inspectionKind: InspectionKind.NA,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Σύμφωνα με το βιβλίο του κατασκευαστή και την μελέτη έδρασης του γερανού',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -201,8 +366,24 @@ class Certificate {
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -213,8 +394,24 @@ class Certificate {
                   description: 'ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -225,8 +422,24 @@ class Certificate {
                   description: 'ΣΥΝΔΕΣΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -237,8 +450,24 @@ class Certificate {
                   description: 'ΜΕΣΑ ΑΝΥΨΩΣΗΣ (ΣΥΡΜΑΤΟΣΧΟΙΝΑ, ΑΛΥΣΙΔΕΣ, ΕΜΒΟΛΑ)',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -249,8 +478,24 @@ class Certificate {
                   description: 'ΑΠΟΣΒΕΣΤΗΡΕΣ - ΤΕΡΜΑΤΑ ΔΙΑΔΡΟΜΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -262,8 +507,24 @@ class Certificate {
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -274,8 +535,24 @@ class Certificate {
                   description: 'ΣΥΝΔΕΣΜΟΙ - ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -286,8 +563,24 @@ class Certificate {
                   description: 'ΚΙΝΗΤΗΡΙΟΣ ΜΗΧΑΝΙΣΜΟΣ, ΦΡΕΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -298,8 +591,24 @@ class Certificate {
                   description: 'ΤΡΟΧΙΕΣ, ΟΔΗΓΟΙ, ΡΑΟΥΛΑ, ΤΡΟΧΟΙ ΚΙΝΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -310,8 +619,24 @@ class Certificate {
                   description: 'ΟΡΙΟΘΕΤΕΣ, ΑΠΟΣΒΕΣΤΗΡΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -322,8 +647,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑΤΑ ΑΣΦΑΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -335,8 +676,24 @@ class Certificate {
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -347,8 +704,24 @@ class Certificate {
                   description: 'ΒΑΡΟΥΛΚΟ, ΤΡΟΧΑΛΙΕΣ - ΡΑΟΥΛΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -359,8 +732,24 @@ class Certificate {
                   description: 'ΦΡΕΝΑ (ΚΑΤΑΣΤΑΣΗ, ΛΕΙΤΟΥΡΓΙΚΟΣ ΕΛΕΓΧΟΣ)',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -371,8 +760,24 @@ class Certificate {
                   description: 'ΣΥΓΚΟΛΛΗΣΕΙΣ - ΣΥΝΔΕΣΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -384,8 +789,24 @@ class Certificate {
                   description: 'ΣΙΔΗΡΟΤΡΟΧΙΕΣ, ΡΑΟΥΛΑ - ΤΡΟΧΟΙ ΚΙΝΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -396,8 +817,24 @@ class Certificate {
                   description: 'ΑΠΟΣΒΕΣΤΗΡΕΣ - ΤΕΡΜΑΤΑ ΔΙΑΔΡΟΜΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -408,8 +845,24 @@ class Certificate {
                   description: 'ΣΥΝΔΕΣΜΟΙ - ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -420,8 +873,24 @@ class Certificate {
                   description: 'ΚΙΝΗΤΗΡΙΟΣ ΜΗΧΑΝΙΣΜΟΣ, ΦΡΕΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -432,8 +901,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑΤΑ ΑΣΦΑΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -445,8 +930,24 @@ class Certificate {
                   description: 'ΣΚΑΛΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -457,8 +958,24 @@ class Certificate {
                   description: 'ΔΙΑΔΡΟΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -469,8 +986,24 @@ class Certificate {
                   description: 'ΆΛΛΑ ΜΕΣΑ - ΠΛΑΤΦΟΡΜΕΣ ΕΡΓΑΣΙΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -482,8 +1015,24 @@ class Certificate {
                   description: 'ΤΡΟΧΟΙ ΠΟΡΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -494,8 +1043,24 @@ class Certificate {
                   description: 'ΜΕΣΑ ΕΥΣΤΑΘΕΙΑΣ - ΑΝΑΒΟΛΕΙΣ ΠΤΩΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '4 ποδαρικά στήριξης κατά την λειτουργία',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '4 ποδαρικά στήριξης κατά την λειτουργία',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '4 ποδαρικά στήριξης κατά την λειτουργία',
+                    },
+                  },
                 },
               ],
             },
@@ -506,8 +1071,24 @@ class Certificate {
                   description: 'ΆΞΟΝΕΣ - ΣΥΝΔΕΣΜΟΛΟΓΙΑ ΑΞΟΝΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -518,8 +1099,24 @@ class Certificate {
                   description: 'ΤΥΜΠΑΝΑ ΠΕΡΙΕΛΙΞΕΩΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -530,8 +1127,24 @@ class Certificate {
                   description: 'ΤΡΟΧΑΛΙΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -542,8 +1155,24 @@ class Certificate {
                   description: 'ΟΔΟΝΤΩΤΟΙ ΤΡΟΧΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -554,8 +1183,24 @@ class Certificate {
                   description: 'ΚΟΧΛΙΕΣ, ΠΕΡΙΚΟΧΛΙΑ, ΣΦΗΝΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -566,8 +1211,24 @@ class Certificate {
                   description: 'ΥΔΡΑΥΛΙΚΑ &amp; ΠΝΕΥΜΑΤΙΚΑ ΣΥΣΤΗΜΑΤΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -579,8 +1240,27 @@ class Certificate {
                     'ΣΥΣΤΗΜΑΤΑ ΑΥΤΟΜΑΤΗΣ ΠΡΟΕΙΔΟΠΟΙΗΣΗΣ, ΣΥΣΤΗΜΑΤΑ ΟΡΙΑΚΟΥ ΤΕΡΜΑΤΙΣΜΟΥ, ΠΡΟΣΤΑΣΙΑ ΥΠΕΡΦΟΡΤΙΣΗΣ, ΒΑΛΒΙΔΑ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Στο μηχάνημα υπάρχει φάρος με φωτεινή ένδειξη υπέρβαρου και ηχητικό σήμα με ένδειξη ( % ) για την υπερφόρτιση',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Στο μηχάνημα υπάρχει φάρος με φωτεινή ένδειξη υπέρβαρου και ηχητικό σήμα με ένδειξη ( % ) για την υπερφόρτιση',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Στο μηχάνημα υπάρχει φάρος με φωτεινή ένδειξη υπέρβαρου και ηχητικό σήμα με ένδειξη ( % ) για την υπερφόρτιση',
+                    },
+                  },
                 },
               ],
             },
@@ -591,8 +1271,24 @@ class Certificate {
                   description: 'ΠΡΟΦΥΛΑΚΤΗΡΕΣ & ΣΥΣΤΗΜΑΤΑ ΠΡΟΣΤΑΣΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -603,8 +1299,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑΤΑ ΛΙΠΑΝΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -615,8 +1327,24 @@ class Certificate {
                   description: 'ΑΠΟΣΤΑΣΕΙΣ ΑΣΦΑΛΕΙΑΣ, ΠΡΟΦΥΛΑΚΤΗΡΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -627,8 +1355,24 @@ class Certificate {
                   description: 'ΈΔΡΑΣΗ - ΑΓΚΥΡΩΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Έδραση του γερανού',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Έδραση του γερανού',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Έδραση του γερανού',
+                    },
+                  },
                 },
               ],
             },
@@ -639,8 +1383,24 @@ class Certificate {
                   description: 'ΛΗΨΗ ΜΕΤΡΩΝ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -652,8 +1412,24 @@ class Certificate {
                   description: 'ΔΙΑΚΟΠΤΕΣ & ΕΝΕΡΓΟΠΟΙΗΤΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -664,8 +1440,24 @@ class Certificate {
                   description: 'ΓΡΑΜΜΕΣ ΤΡΟΦΟΔΟΣΙΑΣ, ΓΕΙΩΣΕΙΣ, ΜΟΝΩΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -676,8 +1468,24 @@ class Certificate {
                   description: 'ΠΙΝΑΚΕΣ, ΚΑΤΑΝΑΛΩΤΕΣ ΙΣΧΥΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -688,8 +1496,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑΤΑ, ΔΙΑΚΟΠΤΕΣ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -700,8 +1524,24 @@ class Certificate {
                   description: 'ΧΕΙΡΙΣΤΗΡΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Και ασύρματο',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Και ασύρματο',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Και ασύρματο',
+                    },
+                  },
                 },
               ],
             },
@@ -712,8 +1552,24 @@ class Certificate {
                   description: 'ΘΑΛΑΜΟΙ ΧΕΙΡΙΣΜΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -724,8 +1580,24 @@ class Certificate {
                   description: 'ΦΩΤΙΣΜΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -736,8 +1608,24 @@ class Certificate {
                   description: 'ΓΕΙΩΣΗ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -749,8 +1637,24 @@ class Certificate {
                   description: 'ΣΥΡΜΑΤΟΣΧΟΙΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -761,8 +1665,24 @@ class Certificate {
                   description: 'ΆΛΛΑ ΕΞΑΡΤΗΜΑΤΑ ΑΝΑΡΤΗΣΗΣ ΦΟΡΤΙΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει μηχανισμό Fly Jib',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει μηχανισμό Fly Jib',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει μηχανισμό Fly Jib',
+                    },
+                  },
                 },
               ],
             },
@@ -773,8 +1693,24 @@ class Certificate {
                   description: 'ΑΓΚΙΣΤΡΑ, ΑΡΠΑΓΕΣ ΚΑΙ ΥΠΟΛΟΙΠΟΣ ΣΥΝΑΦΗΣ ΕΞΟΠΛΙΣΜΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει δύο άγκιστρα\nΆγκιστρο του Fly Jib & της κύριας μπούμας',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει δύο άγκιστρα\nΆγκιστρο του Fly Jib & της κύριας μπούμας',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Φέρει δύο άγκιστρα\nΆγκιστρο του Fly Jib & της κύριας μπούμας',
+                    },
+                  },
                 },
               ],
             },
@@ -786,8 +1722,24 @@ class Certificate {
                   description: 'ΠΡΟΣΤΑΣΙΑ ΚΑΜΠΙΝΑΣ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -798,8 +1750,24 @@ class Certificate {
                   description: 'ΘΕΣΗ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -810,8 +1778,24 @@ class Certificate {
                   description: 'ΧΕΙΡΙΣΤΗΡΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -822,8 +1806,24 @@ class Certificate {
                   description: 'ΑΝΤΙΕΚΡΗΚΤΙΚΗ ΠΡΟΣΤΑΣΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -834,8 +1834,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΠΡΟΣΤΑΣΙΑΣ & ΕΙΔΟΠΟΙΗΣΗΣ ΧΕΙΡΙΣΤΗ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -847,8 +1863,24 @@ class Certificate {
                   description: 'ΈΛΕΓΧΟΣ ΒΑΡΩΝ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Χρησιμοποιήθηκε δυναμοζυγός',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Χρησιμοποιήθηκε δυναμοζυγός',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -859,8 +1891,24 @@ class Certificate {
                   description: 'ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -871,8 +1919,24 @@ class Certificate {
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΖΥΓΙΣΗ ΣΕ ΔΙΑΚΡΙΒΩΜΕΝΗ ΠΛΑΣΤΙΓΚΑ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -883,8 +1947,24 @@ class Certificate {
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΣΥΓΚΡΙΣΗ ΜΕ ΔΙΑΚΡΙΒΩΜΕΝΑ ΑΝΤΙΒΑΡΑ ΓΕΡΑΝΩΝ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -895,8 +1975,24 @@ class Certificate {
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΑΛΛΟ:',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Περονοφόρο όχημα 3900kg & Αντίβαρα μεταλλικά ζυγισμένα',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: 'Περονοφόρο όχημα 3900kg & Αντίβαρα μεταλλικά ζυγισμένα',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -907,8 +2003,40 @@ class Certificate {
                   description: 'ΣΤΑΤΙΚH ΔΟΚΙΜH',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η στατική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,25 x P για P ≤ 20 TONS</u></b>\n' +
+                        '<b><u>επί το φορτίο πιστοποίησης.</u></b>\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για ην διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
+                        '<b>3,925 tons at 10,40 m R</b>\n' +
+                        '<b>2,162 tons at 16,75 m R</b>\n' +
+                        '<b>0,82 tons at 24,85 m R Fly Jib</b>\n' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η στατική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,25 x P για P ≤ 20 TONS</u></b>\n' +
+                        '<b><u>επί το φορτίο πιστοποίησης.</u></b>\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για ην διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
+                        '<b>3,925 tons at 10,40 m R</b>\n' +
+                        '<b>2,162 tons at 16,75 m R</b>\n' +
+                        '<b>0,82 tons at 24,85 m R Fly Jib</b>\n' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -919,8 +2047,24 @@ class Certificate {
                   description: 'ΈΛΕΓΧΟΣ ΒΕΛΟΥΣ ΚΑΜΨΗΣ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -931,8 +2075,38 @@ class Certificate {
                   description: 'ΔΥΝΑΜΙΚH ΔΟΚΙΜH',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η δυναμική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,1 x P επί φορτίο πιστοποίησης.</u></b>\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για την διεξαγωγή της δυναμικής δοκιμής, ήταν:\n' +
+                        '<b>3,454 tons at 10,40 m R</b>\n' +
+                        '<b>1,903 tons at 16,75 m R</b>\n' +
+                        '<b>0,72 tons at 24,85 m R Fly Jib</b>\n' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η δυναμική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,1 x P επί φορτίο πιστοποίησης.</u></b>\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για την διεξαγωγή της δυναμικής δοκιμής, ήταν:\n' +
+                        '<b>3,454 tons at 10,40 m R</b>\n' +
+                        '<b>1,903 tons at 16,75 m R</b>\n' +
+                        '<b>0,72 tons at 24,85 m R Fly Jib</b>\n' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -943,8 +2117,30 @@ class Certificate {
                   description: 'ΔΟΚΙΜH ΕΥΣΤΑΘΕΙΑΣ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η δοκιμή ευστάθειας πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,25 επί του ονομαστικού φορτίου + 0,1 επί το βάρος της κεραίας του ανυψωτικού, </u></b>' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments:
+                        'Η δοκιμή ευστάθειας πραγματοποιήθηκε με βάρος:\n' +
+                        '<b><u>1,25 επί του ονομαστικού φορτίου + 0,1 επί το βάρος της κεραίας του ανυψωτικού, </u></b>' +
+                        'καλύπτοντας έτσι τα κριτήρια που ορίζει το ΦΕΚ 1186Β/2003 για τα ανυψωτικά μηχανήματα.',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -960,8 +2156,24 @@ class Certificate {
                   description: 'ΜΕΣΑ ΕΥΣΤΑΘΕΙΑΣ, ΑΝΑΒΟΛΕΙΣ ΠΤΩΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -972,8 +2184,24 @@ class Certificate {
                   description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -984,8 +2212,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΕΛΕΓΧΟΥ ΑΝΥΨΩΣΗΣ ΑΠΟ ΤΟ ΘΑΛΑΜΟ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -996,8 +2240,24 @@ class Certificate {
                   description: 'ΣΚΕΛΕΤΟΣ ΟΧΗΜΑΤΟΣ, ΤΡΟΧΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.OK,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1008,8 +2268,24 @@ class Certificate {
                   description: 'ΠΡΟΣΤΑΣΙΑ ΚΑΜΠΙΝΑΣ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1025,8 +2301,24 @@ class Certificate {
                   description: 'ΌΧΗΜΑ, ΠΛΑΙΣΙΟ ΑΝΥΨΩΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1037,8 +2329,24 @@ class Certificate {
                   description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΙΣΤΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1049,8 +2357,24 @@ class Certificate {
                   description: 'ΡΑΟΥΛΑ ΚΥΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1061,8 +2385,24 @@ class Certificate {
                   description: 'ΈΔΡΑΣΗ ΤΡΟΧΩΝ ΚΥΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1073,8 +2413,24 @@ class Certificate {
                   description: 'ΡΑΟΥΛΑ ΑΛΥΣΙΔΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1085,8 +2441,24 @@ class Certificate {
                   description: 'ΑΛΥΣΙΔΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1097,8 +2469,24 @@ class Certificate {
                   description: 'ΦΡΕΝΑ ΟΧΗΜΑΤΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1109,8 +2497,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΦΟΡΤΙΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1121,8 +2525,24 @@ class Certificate {
                   description: 'ΦΟΡΕΑΣ ΠΕΡΟΝΩΝ, ΠΕΡΟΝΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1133,8 +2553,24 @@ class Certificate {
                   description: 'ΈΛΕΓΧΟΣ ΥΠΕΡΦΟΡΤΩΣΗΣ, ΕΠΙΠΛΕΟΝ ΕΠΙΣΚΕΥΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1145,8 +2581,24 @@ class Certificate {
                   description: 'ΠΡΟΣΤΑΣΙΑ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1157,8 +2609,24 @@ class Certificate {
                   description: 'ΠΡΟΣΤΑΤΕΥΤΙΚΟ ΔΙΚΤΥΩΜΑ ‘Η ΚΟΥΒΟΥΚΛΙΟ ΘΕΣΗΣ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1169,8 +2637,24 @@ class Certificate {
                   description: 'ΘΕΣΗ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1181,8 +2665,24 @@ class Certificate {
                   description: 'ΠΡΟΣΤΑΣΙΑ ΠΥΡΚΑΓΙΑΣ, ΠΡΟΣΤΑΣΙΑ ΣΤΑΤΙΚΟΥ ΗΛΕΚΤΡΙΣΜΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1193,8 +2693,24 @@ class Certificate {
                   description: 'ΑΝΤΙΕΚΡΗΚΤΙΚΗ ΠΡΟΣΤΑΣΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1210,8 +2726,24 @@ class Certificate {
                   description: 'ΔΙΚΤΥΟ ΣΚΥΡΟΔΕΜΑΤΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1222,8 +2754,24 @@ class Certificate {
                   description: 'ΣΗΜΑΝΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1239,8 +2787,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΔΙΕΥΘΥΝΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1251,8 +2815,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΑΝΑΡΤΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1263,8 +2843,24 @@ class Certificate {
                   description: 'ΣΥΣΤΗΜΑ ΠΕΔΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1275,8 +2871,24 @@ class Certificate {
                   description: 'ΤΡΟΧΟΙ, ΕΛΑΣΤΙΚΑ, ΕΡΠΥΣΤΡΙΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },
@@ -1287,8 +2899,24 @@ class Certificate {
                   description: 'ΦΩΤΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
-                  value: undefined,
-                  comments: '',
+                  templateValues: {
+                    DEFAULT: {
+                      value: undefined,
+                      comments: '',
+                    },
+                    [InspectionCheckType.AA]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.A]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                    [InspectionCheckType.B]: {
+                      value: InspectionArticleFieldValue.NA,
+                      comments: '',
+                    },
+                  },
                 },
               ],
             },

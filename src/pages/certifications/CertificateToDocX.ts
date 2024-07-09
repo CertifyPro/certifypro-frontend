@@ -41,6 +41,7 @@ export const downloadCertificate = async (certificate: Certificate) => {
     tableInfoArticleTableConfig.inspectionArticleCellHeight,
     tableInfoArticleTableConfig.inspectionArticleCellMargin,
     certificate._inspectionReport.inspectionCategories[0],
+    certificate._inspectionCheckType,
   );
 
   const table1 = createInspectionArticleTable(
@@ -48,6 +49,7 @@ export const downloadCertificate = async (certificate: Certificate) => {
     tableInfoArticleTableConfig.inspectionArticleCellHeight,
     tableInfoArticleTableConfig.inspectionArticleCellMargin,
     certificate._inspectionReport.inspectionCategories[1],
+    certificate._inspectionCheckType,
   );
 
   const table2 = createInspectionArticleTable(
@@ -55,6 +57,7 @@ export const downloadCertificate = async (certificate: Certificate) => {
     tableInfoArticleTableConfig.inspectionArticleCellHeight,
     tableInfoArticleTableConfig.inspectionArticleCellMargin,
     certificate._inspectionReport.inspectionCategories[2],
+    certificate._inspectionCheckType,
   );
 
   const table3 = createInspectionArticleTable(
@@ -62,6 +65,7 @@ export const downloadCertificate = async (certificate: Certificate) => {
     tableInfoArticleTableConfig.inspectionArticleCellHeight,
     tableInfoArticleTableConfig.inspectionArticleCellMargin,
     certificate._inspectionReport.inspectionCategories[3],
+    certificate._inspectionCheckType,
   );
 
   const table4 = createInspectionArticleTable(
@@ -69,6 +73,7 @@ export const downloadCertificate = async (certificate: Certificate) => {
     tableInfoArticleTableConfig.inspectionArticleCellHeight,
     tableInfoArticleTableConfig.inspectionArticleCellMargin,
     certificate._inspectionReport.inspectionCategories[4],
+    certificate._inspectionCheckType,
   );
 
   // Create a new Document

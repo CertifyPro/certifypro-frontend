@@ -12,7 +12,8 @@ import {
   ShadingType,
   AlignmentType,
 } from 'docx';
-import { InspectionCategory, InspectionArticleFieldValue } from '../Certificate';
+import { InspectionCategory, InspectionArticleFieldValue, InspectionCheckType } from '../Certificate';
+import { convertEnrichedTextToTextRuns } from './utils';
 
 type InspectionArticleColumns = {
   title: string;
@@ -26,9 +27,14 @@ const createInspectionArticleTableCell = (
   alignment: ILevelParagraphStylePropertiesOptions['alignment'],
   rowSpan?: number,
   columnSpan?: number,
-) =>
-  new TableCell({
-    children: [new Paragraph({ text, alignment, style: 'tableContent' })],
+) => {
+  const enrinchedParagraph = new Paragraph({
+    children: convertEnrichedTextToTextRuns(text),
+    alignment,
+    style: 'tableContent',
+  });
+  return new TableCell({
+    children: [enrinchedParagraph],
     margins: {
       top: convertInchesToTwip(0.056), // Padding in twips (1/20th of a point), so 10 points is 200 twips
       bottom: convertInchesToTwip(0.056),
@@ -38,12 +44,14 @@ const createInspectionArticleTableCell = (
     rowSpan,
     columnSpan,
   });
+};
 
 export const createInspectionArticleTable = (
   inspectionArticleColumns: InspectionArticleColumns[],
   inspectionArticleCellHeight: number,
   inspectionArticleCellMargin: number,
   inspectionCategory: InspectionCategory,
+  inspectionCheckType: InspectionCheckType | 'DEFAULT' = 'DEFAULT',
 ) => {
   // Create the table with the header row and data rows
   return [
@@ -125,25 +133,25 @@ export const createInspectionArticleTable = (
                 );
                 dataCells.push(
                   createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.OK ? 'X' : '',
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
                   ),
                 );
                 dataCells.push(
                   createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
                   ),
                 );
                 dataCells.push(
                   createInspectionArticleTableCell(
-                    field.value === InspectionArticleFieldValue.NA ? 'X' : '',
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
                   ),
                 );
                 dataCells.push(
                   createInspectionArticleTableCell(
-                    field.comments,
+                    field.templateValues[inspectionCheckType].comments,
                     inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
                   ),
                 );
