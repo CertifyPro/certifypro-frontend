@@ -20,9 +20,9 @@ export enum InspectionArticleFieldValue {
 }
 
 export enum InspectionCheckType {
-  AA,
-  A,
-  B,
+  AA = 'AA',
+  A = 'A',
+  B = 'B',
 }
 
 type InspectionArticleField = {
@@ -54,26 +54,38 @@ type InspectionReport = {
   inspectionCategories: InspectionCategory[];
 };
 
-enum CertificateStatusType {
-  SUCCESS,
-  FAIL,
+export enum CertificateType {
+  INSPECTION_REPORT = 'ΕΚΘΕΣΗ_ΕΠΙΘΕΩΡΗΣΗΣ',
+  INSPECTION_CERTIFICATE = 'ΠΙΣΤΟΠΟΙΗΤΙΚΟ ΕΛΕΓΧΟΥ',
+}
+
+export enum CertificateCategory {
+  LIFTING_MACHINE_PAPAGALAKI = 'ΓΕΡΑΝΟΣ ΕΠΙ ΟΧΗΜΑΤΟΣ - ΠΑΠΑΓΑΛΑΚΙ',
 }
 
 class Certificate {
   public _name: string;
-  public _statusType: CertificateStatusType;
+  public _type: CertificateType;
+  public _category: CertificateCategory;
   public _inspectionCheckType?: InspectionCheckType;
   public _inspectionReport: InspectionReport;
+  public _createdAt: Date;
+  public _updatedAt: Date;
 
   constructor(
     name: string = 'New Certificate',
-    statusType: CertificateStatusType = CertificateStatusType.SUCCESS,
+    type: CertificateType = CertificateType.INSPECTION_CERTIFICATE,
+    category: CertificateCategory = CertificateCategory.LIFTING_MACHINE_PAPAGALAKI,
     inspectionCheckType: InspectionCheckType | undefined,
+    createdAt?: Date,
+    updatedAt?: Date,
   ) {
     this._name = name;
-    this._statusType = statusType;
+    this._type = type;
+    this._category = category;
     this._inspectionCheckType = inspectionCheckType;
-
+    this._createdAt = createdAt || new Date();
+    this._updatedAt = updatedAt || new Date();
     this._inspectionReport = {
       inspectionCategories: [
         {

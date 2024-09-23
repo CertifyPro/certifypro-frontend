@@ -9,7 +9,7 @@ const menuItems = {
       children: [
         {
           id: 'certification',
-          title: 'Certifications',
+          title: 'Πιστοποιητικά',
           type: 'collapse',
           icon: FileTextOutlined,
           url: '/certifications/all',
@@ -17,7 +17,7 @@ const menuItems = {
           children: [
             {
               id: 'certification-create',
-              title: 'Create',
+              title: 'Δημιουργία',
               type: 'item',
               url: '/certifications/new',
               breadcrumbs: false,
@@ -32,7 +32,7 @@ const menuItems = {
       children: [
         {
           id: 'settings',
-          title: 'Settings',
+          title: 'Ρυθμίσεις',
           type: 'item',
           breadcrumbs: false,
           icon: SettingOutlined,
