@@ -71,7 +71,7 @@ const CertificationsCreatePage: React.FC = () => {
               <Grid container spacing={4} alignItems="center">
                 <Grid item xs={12} sm={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="certificateCategory">ΚΑΤΗΓΟΡΙΑ</InputLabel>
+                    <InputLabel htmlFor="certificateCategory">Κατηγορία</InputLabel>
                     <FormControl>
                       <Select
                         id="certificateCategory"
@@ -88,7 +88,7 @@ const CertificationsCreatePage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6}>
-                  <InputLabel htmlFor="inspectionCheckType">ΕΛΕΓΧΟΣ ΤΥΠΟΥ</InputLabel>
+                  <InputLabel htmlFor="inspectionCheckType">Έλεγχος τύπου</InputLabel>
                   <FormControl margin="dense">
                     <RadioGroup
                       row
@@ -107,7 +107,7 @@ const CertificationsCreatePage: React.FC = () => {
 
                 <Grid item xs={12} sm={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="certificateType">ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ</InputLabel>
+                    <InputLabel htmlFor="certificateType">Έγγραφο</InputLabel>
                     <FormControl>
                       <Select
                         id="certificateType"
@@ -127,10 +127,10 @@ const CertificationsCreatePage: React.FC = () => {
                 <Grid item xs={12} marginTop={2}>
                   <Stack direction="row" justifyContent="flex-end" spacing={2}>
                     <Button onClick={onDownloadCertificate} variant="outlined" startIcon={<FileWordOutlined />}>
-                      Εξαγωγή
+                      ΕΞΑΓΩΓΗ
                     </Button>
                     <Button variant="contained" type="submit">
-                      Δημιουργία & Επεξ.
+                      ΔΗΜΙΟΥΡΓΙΑ
                     </Button>
                   </Stack>
                 </Grid>

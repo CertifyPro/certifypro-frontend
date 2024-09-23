@@ -30,7 +30,7 @@ import FileWordOutlined from '@ant-design/icons/FileWordOutlined';
 
 const CertificationsPage: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [isFetchingCertificates, setIsFetchingCertificates] = useState(true);
+  const [isFetchingCertificates, setIsFetchingCertificates] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate>();
 

@@ -11,11 +11,11 @@ import ThemeModeSettings from './ThemeModeSettings';
 import HighlightOutlined from '@ant-design/icons/HighlightOutlined';
 
 const SettingsPage: React.FC = () => {
-  const breadcrumbLinks = [{ title: 'Home', to: APP_DEFAULT_PATH }, { title: 'Settings' }];
+  const breadcrumbLinks = [{ title: 'Αρχική', to: APP_DEFAULT_PATH }, { title: 'Ρυθμίσεις' }];
 
   return (
     <>
-      <Breadcrumbs custom heading="Settings" links={breadcrumbLinks} />
+      <Breadcrumbs custom links={breadcrumbLinks} />
       <Stack direction="column" spacing={1.25}>
         <Stack direction="row" spacing={1.25} alignItems="center">
           <HighlightOutlined />
