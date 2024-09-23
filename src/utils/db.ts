@@ -22,7 +22,10 @@ async function getDB() {
 // Add a certificate
 export async function addCertificate(certificate: Certificate): Promise<void> {
   const db = await getDB();
-  await db.add(STORE_NAME, certificate);
+  // If `id` is undefined, IndexedDB will auto-generate it
+  const certToAdd = { ...certificate };
+  delete certToAdd.id;
+  await db.add(STORE_NAME, certToAdd);
 }
 
 // Fetch all certificates

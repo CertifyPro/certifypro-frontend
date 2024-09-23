@@ -64,6 +64,7 @@ export enum CertificateCategory {
 }
 
 class Certificate {
+  public id?: number;
   public _name: string;
   public _type: CertificateType;
   public _category: CertificateCategory;
@@ -79,7 +80,9 @@ class Certificate {
     inspectionCheckType: InspectionCheckType | undefined,
     createdAt?: Date,
     updatedAt?: Date,
+    id?: number,
   ) {
+    this.id = id;
     this._name = name;
     this._type = type;
     this._category = category;

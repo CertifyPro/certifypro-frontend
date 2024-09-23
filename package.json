@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.11.5",
     "@fontsource/inter": "^5.0.18",
     "@mui/material": "^5.15.18",
+    "@tanstack/react-table": "^8.20.5",
     "axios": "^1.6.8",
     "docx": "^8.5.0",
     "file-saver": "^2.0.5",

@@ -1,3 +1,6 @@
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+
 // mui
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -20,9 +23,8 @@ import { downloadCertificate } from './CertificateToDocX';
 // assets
 import FileWordOutlined from '@ant-design/icons/FileWordOutlined';
 
-import { useFormik } from 'formik';
-
 const CertificationsCreatePage: React.FC = () => {
+  const navigate = useNavigate();
   const breadcrumbLinks = [{ title: 'Πιστοποιητικά', to: '/certifications/all' }, { title: 'Δημιουργία' }];
 
   const formik = useFormik({
@@ -33,14 +35,18 @@ const CertificationsCreatePage: React.FC = () => {
     },
     onSubmit: async (data) => {
       const newCertificate = new Certificate(
-        undefined,
+        `${data.certificateCategory} - ΤΥΠΟΥ-${data.inspectionCheckType}`,
         data.certificateType,
         data.certificateCategory,
         data.inspectionCheckType,
       );
-      await addCertificate(newCertificate).catch((e) => {
-        console.error('Failed to add certificate to db with error: ', e);
-      });
+      await addCertificate(newCertificate)
+        .then(() => {
+          navigate('/certifications/all');
+        })
+        .catch((e) => {
+          console.error('Failed to add certificate to db with error: ', e);
+        });
     },
   });
 
