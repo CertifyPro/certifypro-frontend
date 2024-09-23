@@ -21,6 +21,7 @@ import Certificate from '@pages/certifications/Certificate';
 import { getAllCertificates, deleteCertificate } from 'utils/db';
 import { downloadCertificate } from './CertificateToDocX';
 import { CertificateModal } from './CertificateModal';
+import { EmptyTable } from './EmptyTable';
 
 // assets
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
@@ -29,6 +30,7 @@ import FileWordOutlined from '@ant-design/icons/FileWordOutlined';
 
 const CertificationsPage: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [isFetchingCertificates, setIsFetchingCertificates] = useState(true);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate>();
 
@@ -46,6 +48,7 @@ const CertificationsPage: React.FC = () => {
   };
 
   const fetchCertificates = useCallback(async () => {
+    setIsFetchingCertificates(true);
     const certs = await getAllCertificates();
 
     // Sort certificates by updated_at (latest first)
@@ -54,6 +57,7 @@ const CertificationsPage: React.FC = () => {
     });
 
     setCertificates(sortedCertificates);
+    setIsFetchingCertificates(false);
   }, []);
 
   const columns = useMemo(
@@ -146,15 +150,27 @@ const CertificationsPage: React.FC = () => {
               ))}
             </TableHead>
             <TableBody>
-              {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} {...cell.column.columnDef.meta}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
+              {table.getRowModel().rows.length > 0 ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} {...cell.column.columnDef.meta}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <>
+                  {!isFetchingCertificates && (
+                    <TableRow>
+                      <TableCell colSpan={table.getAllColumns().length}>
+                        <EmptyTable msg="Δεν Υπάρχουν Δεδομένα" />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
