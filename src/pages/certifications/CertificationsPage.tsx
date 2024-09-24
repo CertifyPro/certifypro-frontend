@@ -30,7 +30,7 @@ import FileWordOutlined from '@ant-design/icons/FileWordOutlined';
 
 const CertificationsPage: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [isFetchingCertificates, setIsFetchingCertificates] = useState(false);
+  const [isFetchingCertificates, setIsFetchingCertificates] = useState(true);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate>();
 
@@ -56,8 +56,10 @@ const CertificationsPage: React.FC = () => {
       return new Date(b._updatedAt).getTime() - new Date(a._updatedAt).getTime();
     });
 
-    setCertificates(sortedCertificates);
-    setIsFetchingCertificates(false);
+    setCertificates(() => {
+      setIsFetchingCertificates(false);
+      return sortedCertificates;
+    });
   }, []);
 
   const columns = useMemo(
