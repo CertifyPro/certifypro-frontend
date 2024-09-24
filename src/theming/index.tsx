@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 // project import
-import useConfig from '@hooks/useConfig';
+import useConfig from 'hooks/useConfig';
 import Palette from './palette';
 import Typography from './typography';
 import CustomShadows from './shadows';

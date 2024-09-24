@@ -182,5 +182,5 @@ export const downloadCertificate = async (certificate: Certificate) => {
   const blob = await Packer.toBlob(doc);
 
   // Use file-saver to save the blob as a .docx file
-  saveAs(blob, 'certificate-example.docx');
+  saveAs(blob, `${certificate._name}.docx`);
 };

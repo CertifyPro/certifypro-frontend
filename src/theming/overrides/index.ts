@@ -2,6 +2,9 @@
 import merge from 'lodash.merge';
 
 // project import
+import Accordion from './Accordion';
+import AccordionDetails from './AccordionDetails';
+import AccordionSummary from './AccordionSummary';
 import Button from './Button';
 import ButtonBase from './ButtonBase';
 import Dialog from './Dialog';
@@ -22,10 +25,13 @@ import Typography from './Typography';
 
 export default function ComponentsOverrides(theme) {
   return merge(
+    Accordion(theme),
+    AccordionDetails(theme),
+    AccordionSummary(theme),
     Button(theme),
     ButtonBase(),
     Dialog(),
-    DialogContentText(),
+    DialogContentText(theme),
     DialogTitle(),
     IconButton(theme),
     InputLabel(theme),

@@ -1,16 +1,12 @@
-// material-ui
-import { alpha } from '@mui/material/styles';
+// ==============================|| OVERRIDES - DIALOG CONTENT TEXT ||============================== //
 
-// ==============================|| OVERRIDES - DIALOG ||============================== //
-
-export default function Dialog() {
+export default function DialogContentText(theme) {
   return {
-    MuiDialog: {
+    MuiDialogContentText: {
       styleOverrides: {
         root: {
-          '& .MuiBackdrop-root': {
-            backgroundColor: alpha('#000', 0.7),
-          },
+          fontSize: '0.875rem',
+          color: theme.palette.text.primary,
         },
       },
     },

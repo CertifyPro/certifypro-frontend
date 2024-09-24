@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import MainCard from 'components/MainCard';
 import Certificate from './Certificate';
 import { CertificateFormEdit } from './CertificateFormEdit';
+import Box from '@mui/material/Box';
 
 // ==============================|| CERTIFICATE ADD / EDIT ||============================== //
 
@@ -48,11 +49,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             modal
             content={false}
           >
-            <CertificateFormEdit
-              certificate={certificate}
-              fetchCertificates={fetchCertificates}
-              closeModal={closeModal}
-            />
+            <Box sx={{ overflowX: 'auto', maxHeight: `calc(100vh - 48px)` }}>
+              <CertificateFormEdit
+                certificate={certificate}
+                fetchCertificates={fetchCertificates}
+                closeModal={closeModal}
+              />
+            </Box>
           </MainCard>
         </Modal>
       )}

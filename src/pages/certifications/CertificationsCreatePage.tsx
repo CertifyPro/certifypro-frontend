@@ -34,12 +34,7 @@ const CertificationsCreatePage: React.FC = () => {
       inspectionCheckType: InspectionCheckType.AA,
     },
     onSubmit: async (data) => {
-      const newCertificate = new Certificate(
-        `${data.certificateCategory} - ΤΥΠΟΥ-${data.inspectionCheckType}`,
-        data.certificateType,
-        data.certificateCategory,
-        data.inspectionCheckType,
-      );
+      const newCertificate = new Certificate(data.certificateType, data.certificateCategory, data.inspectionCheckType);
       await addCertificate(newCertificate)
         .then(() => {
           navigate('/certifications/all');
@@ -53,7 +48,6 @@ const CertificationsCreatePage: React.FC = () => {
   const onDownloadCertificate = async () => {
     await downloadCertificate(
       new Certificate(
-        undefined,
         formik.values.certificateType,
         formik.values.certificateCategory,
         formik.values.inspectionCheckType,

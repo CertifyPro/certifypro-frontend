@@ -7,7 +7,7 @@ import SimpleBar from 'simplebar-react';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 // project-import
-import { ThemeMode } from '@config';
+import { ThemeMode } from 'config';
 
 // root style
 const RootStyle = styled(BrowserView)({

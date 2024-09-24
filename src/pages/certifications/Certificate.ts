@@ -55,7 +55,7 @@ type InspectionReport = {
 };
 
 export enum CertificateType {
-  INSPECTION_REPORT = 'ΕΚΘΕΣΗ_ΕΠΙΘΕΩΡΗΣΗΣ',
+  INSPECTION_REPORT = 'ΕΚΘΕΣΗ ΕΠΙΘΕΩΡΗΣΗΣ',
   INSPECTION_CERTIFICATE = 'ΠΙΣΤΟΠΟΙΗΤΙΚΟ ΕΛΕΓΧΟΥ',
 }
 
@@ -74,16 +74,16 @@ class Certificate {
   public _updatedAt: Date;
 
   constructor(
-    name: string = 'New Certificate',
     type: CertificateType = CertificateType.INSPECTION_CERTIFICATE,
     category: CertificateCategory = CertificateCategory.LIFTING_MACHINE_PAPAGALAKI,
     inspectionCheckType: InspectionCheckType | undefined,
+    name?: string,
     createdAt?: Date,
     updatedAt?: Date,
     id?: number,
   ) {
     this.id = id;
-    this._name = name;
+    this._name = name || `${category} - ΤΥΠΟΥ-${inspectionCheckType}`;
     this._type = type;
     this._category = category;
     this._inspectionCheckType = inspectionCheckType;
