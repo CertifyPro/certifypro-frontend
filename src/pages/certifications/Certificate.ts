@@ -25,7 +25,7 @@ export enum InspectionCheckType {
   B = 'B',
 }
 
-type InspectionArticleField = {
+export type InspectionArticleField = {
   description: string;
   inspectionType: InspectionType;
   inspectionKind: InspectionKind;

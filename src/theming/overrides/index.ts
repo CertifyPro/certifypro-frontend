@@ -10,6 +10,7 @@ import ButtonBase from './ButtonBase';
 import Dialog from './Dialog';
 import DialogContentText from './DialogContentText';
 import DialogTitle from './DialogTitle';
+import FormHelperText from './FormHelperText';
 import IconButton from './IconButton';
 import InputLabel from './InputLabel';
 import LinearProgress from './LinearProgress';
@@ -33,6 +34,7 @@ export default function ComponentsOverrides(theme) {
     Dialog(),
     DialogContentText(theme),
     DialogTitle(),
+    FormHelperText(),
     IconButton(theme),
     InputLabel(theme),
     LinearProgress(),
