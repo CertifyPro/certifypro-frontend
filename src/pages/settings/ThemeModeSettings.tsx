@@ -25,7 +25,7 @@ export default function ThemeModeSettings() {
 
   const { mode, onChangeMode } = useConfig();
 
-  const handleModeChange = (event) => {
+  const handleModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeMode(event.target.value);
   };
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
@@ -17,7 +17,18 @@ import ApartmentOutlined from '@ant-design/icons/ApartmentOutlined';
 import HomeOutlined from '@ant-design/icons/HomeOutlined';
 import HomeFilled from '@ant-design/icons/HomeFilled';
 
-export default function Breadcrumbs({
+export type BreadcrumbsProps = {
+  links: { title: string; to?: string }[];
+  heading?: string;
+  card?: boolean;
+  custom?: boolean;
+  divider?: boolean;
+  maxItems?: number;
+  title?: boolean;
+  titleBottom?: boolean;
+};
+
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   card = false,
   custom = false,
   divider = true,
@@ -25,14 +36,14 @@ export default function Breadcrumbs({
   icon,
   icons,
   links,
-  maxItems,
+  maxItems = 8,
   rightAlign,
   separator,
   title = true,
   titleBottom = true,
   sx,
   ...others
-}) {
+}) => {
   const theme = useTheme();
   const location = useLocation();
   const [main, setMain] = useState();
@@ -226,4 +237,4 @@ export default function Breadcrumbs({
   }
 
   return breadcrumbContent;
-}
+};

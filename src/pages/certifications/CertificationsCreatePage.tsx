@@ -14,7 +14,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 
 // project import
-import Breadcrumbs from '@components/@extended/Breadcrumbs';
+import { Breadcrumbs } from '@components/@extended/Breadcrumbs';
 import MainCard from '@components/MainCard';
 import { addCertificate } from 'utils/db';
 import Certificate, { InspectionCheckType, CertificateType, CertificateCategory } from './Certificate';

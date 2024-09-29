@@ -101,7 +101,6 @@ export const templateStyles = {
       basedOn: 'Normal',
       next: 'Normal',
       run: {
-        // bold: true,
         size: 14,
       },
     },

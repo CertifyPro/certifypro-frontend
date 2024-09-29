@@ -14,14 +14,14 @@ import TableRow from '@mui/material/TableRow';
 import { flexRender, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 
 // project import
-import Breadcrumbs from '@components/@extended/Breadcrumbs';
+import { Breadcrumbs } from '@components/@extended/Breadcrumbs';
 import IconButton from 'components/@extended/IconButton';
 import MainCard from 'components/MainCard';
-import Certificate from '@pages/certifications/Certificate';
 import { getAllCertificates, deleteCertificate } from 'utils/db';
 import { downloadCertificate } from './CertificateToDocX';
 import { CertificateModal } from './CertificateModal';
 import { EmptyTable } from './EmptyTable';
+import Certificate from './Certificate';
 
 // assets
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
@@ -74,13 +74,13 @@ const CertificationsPage: React.FC = () => {
           className: 'cell-center',
         },
         disableSortBy: true,
-        cell: ({ row }) => {
+        cell: ({ row }: { row: { original: Certificate } }) => {
           return (
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={0}>
               <Tooltip enterDelay={900} title="Επεξεργασία">
                 <IconButton
                   color="secondary"
-                  onClick={(e) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation();
                     setSelectedCertificate(row.original);
                     setShowCertificateModal(true);
@@ -92,7 +92,7 @@ const CertificationsPage: React.FC = () => {
               <Tooltip enterDelay={900} title="Εξαγωγή">
                 <IconButton
                   color="primary"
-                  onClick={(e) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation();
                     handleDownloadCertificate(row.original);
                   }}
@@ -103,9 +103,9 @@ const CertificationsPage: React.FC = () => {
               <Tooltip enterDelay={900} title="Διαγραφή">
                 <IconButton
                   color="error"
-                  onClick={(e) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation();
-                    handleDelete(row.original.id);
+                    handleDelete(row.original.id!);
                   }}
                 >
                   <DeleteOutlined />

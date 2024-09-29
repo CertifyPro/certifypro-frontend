@@ -15,7 +15,6 @@ import {
 import {
   InspectionCategory,
   InspectionArticleFieldValue,
-  InspectionCheckType,
   InspectionArticleCategory,
   InspectionArticleField,
 } from '../Certificate';
@@ -57,7 +56,6 @@ export const createInspectionArticleTable = (
   inspectionArticleCellHeight: number,
   inspectionArticleCellMargin: number,
   inspectionCategory: InspectionCategory,
-  inspectionCheckType: InspectionCheckType | 'DEFAULT' = 'DEFAULT',
 ) => {
   // Create the table with the header row and data rows
   return [
@@ -161,19 +159,19 @@ export const createInspectionArticleTable = (
                     inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
                   ),
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK ? 'X' : '',
+                    field.value === InspectionArticleFieldValue.OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
                   ),
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
+                    field.value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
                   ),
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA ? 'X' : '',
+                    field.value === InspectionArticleFieldValue.NA ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
                   ),
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].comments,
+                    field.comments,
                     inspectionArticleColumns[currentColumnIndex + 7].contentAlignment,
                   ),
                 );
@@ -210,25 +208,19 @@ export const createInspectionArticleTable = (
                   inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
                 ),
                 createInspectionArticleTableCell(
-                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK
-                    ? 'X'
-                    : '',
+                  inspectionArticle.value === InspectionArticleFieldValue.OK ? 'X' : '',
                   inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
                 ),
                 createInspectionArticleTableCell(
-                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK
-                    ? 'X'
-                    : '',
+                  inspectionArticle.value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
                   inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
                 ),
                 createInspectionArticleTableCell(
-                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA
-                    ? 'X'
-                    : '',
+                  inspectionArticle.value === InspectionArticleFieldValue.NA ? 'X' : '',
                   inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
                 ),
                 createInspectionArticleTableCell(
-                  inspectionArticle.templateValues[inspectionCheckType].comments,
+                  inspectionArticle.comments,
                   inspectionArticleColumns[currentColumnIndex + 7].contentAlignment,
                 ),
               ];

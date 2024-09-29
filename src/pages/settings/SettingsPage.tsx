@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 // project import
-import Breadcrumbs from '@components/@extended/Breadcrumbs';
+import { Breadcrumbs } from '@components/@extended/Breadcrumbs';
 import { APP_DEFAULT_PATH } from '@config';
 import ThemeModeSettings from './ThemeModeSettings';
 

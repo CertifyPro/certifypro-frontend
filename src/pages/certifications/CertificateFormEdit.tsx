@@ -20,14 +20,11 @@ import Radio from '@mui/material/Radio';
 
 // project imports
 import IconButton from 'components/@extended/IconButton';
-import { deleteCertificate } from 'utils/db';
+import { deleteCertificate, updateCertificate } from 'utils/db';
 import Certificate, {
   InspectionArticleCategory,
   InspectionArticleField,
   InspectionArticleFieldValue,
-  InspectionCheckType,
-  InspectionKind,
-  InspectionType,
 } from './Certificate';
 
 // third party
@@ -59,59 +56,60 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
   const formik = useFormik({
     initialValues: certificate!,
     enableReinitialize: true,
-    onSubmit: async (values) => {
-      console.log('SUBMIT THAT SHIT', values);
-      closeModal();
+    onSubmit: async (submittedCertificate) => {
+      console.log('SUBMITTED: ', submittedCertificate);
+      await updateCertificate(submittedCertificate.id!, submittedCertificate)
+        .catch((e) => {
+          console.error('Failed to update certificate to db with error: ', e);
+        })
+        .finally(() => {
+          closeModal();
+        });
     },
   });
   const { handleSubmit, setFieldValue } = formik;
 
   const handleCategoryChange = useCallback(
     (name: string) => () => {
-      setExpanded(expanded === name ? false : name);
+      setExpanded((prev) => (prev === name ? false : name));
     },
-    [expanded],
+    [],
   );
 
   const handleSubCategoryChange = useCallback(
     (name: string) => () => {
-      setSubExpanded(subExpanded === name ? false : name);
+      setSubExpanded((prev) => (prev === name ? false : name));
     },
-    [subExpanded],
+    [],
   );
 
   const handleEvaluationChange = useCallback(
-    (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) => (event) => {
-      if (fieldIndex !== undefined) {
-        setFieldValue(
-          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].templateValues[${certificate!._inspectionCheckType}].value`,
-          event.target.value,
-        );
-      } else {
-        setFieldValue(
-          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].templateValues[${certificate!._inspectionCheckType}].value`,
-          event.target.value,
-        );
-      }
-    },
-    [setFieldValue, certificate],
+    (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) =>
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        const path =
+          fieldIndex !== undefined
+            ? `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].value`
+            : `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].value`;
+        setFieldValue(path, event.target.value);
+      },
+    [setFieldValue],
   );
 
   const handleCommentsChange = useCallback(
     (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) => (comment: string) => {
       if (fieldIndex !== undefined) {
         setFieldValue(
-          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].templateValues[${certificate!._inspectionCheckType}].comments`,
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].comments`,
           comment,
         );
       } else {
         setFieldValue(
-          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].templateValues[${certificate!._inspectionCheckType}].comments`,
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].comments`,
           comment,
         );
       }
     },
-    [setFieldValue, certificate],
+    [setFieldValue],
   );
 
   return (
@@ -224,8 +222,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                                     ].inspectionArticles[
                                                       inspectionArticleIndex
                                                     ] as InspectionArticleCategory
-                                                  ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
-                                                    .value
+                                                  ).fields[fieldIndex].value
                                                 }
                                                 onChange={handleEvaluationChange(
                                                   inspectionCategoryIndex,
@@ -259,8 +256,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                             formik.values._inspectionReport.inspectionCategories[
                                               inspectionCategoryIndex
                                             ].inspectionArticles[inspectionArticleIndex] as InspectionArticleCategory
-                                          ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
-                                            .value !== InspectionArticleFieldValue.NA ? (
+                                          ).fields[fieldIndex].value !== InspectionArticleFieldValue.NA ? (
                                             <Stack spacing={1}>
                                               <FormHelperText>Παρατηρήσεις</FormHelperText>
                                               <ReactQuill
@@ -280,8 +276,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                                     ].inspectionArticles[
                                                       inspectionArticleIndex
                                                     ] as InspectionArticleCategory
-                                                  ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
-                                                    .comments
+                                                  ).fields[fieldIndex].comments
                                                 }
                                               />
                                             </Stack>
@@ -367,7 +362,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                             formik.values._inspectionReport.inspectionCategories[
                                               inspectionCategoryIndex
                                             ].inspectionArticles[inspectionArticleIndex] as InspectionArticleField
-                                          ).templateValues[certificate._inspectionCheckType!].value
+                                          ).value
                                         }
                                         onChange={handleEvaluationChange(
                                           inspectionCategoryIndex,
@@ -399,8 +394,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                   {(
                                     formik.values._inspectionReport.inspectionCategories[inspectionCategoryIndex]
                                       .inspectionArticles[inspectionArticleIndex] as InspectionArticleField
-                                  ).templateValues[certificate._inspectionCheckType!].value !==
-                                  InspectionArticleFieldValue.NA ? (
+                                  ).value !== InspectionArticleFieldValue.NA ? (
                                     <Stack spacing={1}>
                                       <FormHelperText>Παρατηρήσεις</FormHelperText>
                                       <ReactQuill
@@ -414,7 +408,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
                                             formik.values._inspectionReport.inspectionCategories[
                                               inspectionCategoryIndex
                                             ].inspectionArticles[inspectionArticleIndex] as InspectionArticleField
-                                          ).templateValues[certificate._inspectionCheckType!].comments
+                                          ).comments
                                         }
                                       />
                                     </Stack>
