@@ -18,7 +18,7 @@ import HomeOutlined from '@ant-design/icons/HomeOutlined';
 import HomeFilled from '@ant-design/icons/HomeFilled';
 
 export type BreadcrumbsProps = {
-  links: { title: string; to?: string }[];
+  links?: { title: string; to?: string }[];
   heading?: string;
   card?: boolean;
   custom?: boolean;
