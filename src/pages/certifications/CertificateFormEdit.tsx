@@ -87,11 +87,15 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
   const handleEvaluationChange = useCallback(
     (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) =>
       (event: React.ChangeEvent<HTMLInputElement>) => {
-        const path =
+        const basePath =
           fieldIndex !== undefined
-            ? `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].value`
-            : `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].value`;
-        setFieldValue(path, event.target.value);
+            ? `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}]`
+            : `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}]`;
+        setFieldValue(`${basePath}.value`, event.target.value);
+
+        if (event.target.value === InspectionArticleFieldValue.NA) {
+          setFieldValue(`${basePath}.comments`, '');
+        }
       },
     [setFieldValue],
   );
