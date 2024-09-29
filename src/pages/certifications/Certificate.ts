@@ -33,7 +33,7 @@ export type InspectionArticleField = {
   description: string;
   inspectionType: InspectionType;
   inspectionKind: InspectionKind;
-  value?: InspectionArticleFieldValue;
+  value: InspectionArticleFieldValue | undefined;
   comments: string;
 };
 

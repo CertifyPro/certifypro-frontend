@@ -63,6 +63,7 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
           console.error('Failed to update certificate to db with error: ', e);
         })
         .finally(() => {
+          fetchCertificates();
           closeModal();
         });
     },
