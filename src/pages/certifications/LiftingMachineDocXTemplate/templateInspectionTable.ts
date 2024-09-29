@@ -12,7 +12,13 @@ import {
   ShadingType,
   AlignmentType,
 } from 'docx';
-import { InspectionCategory, InspectionArticleFieldValue, InspectionCheckType } from '../Certificate';
+import {
+  InspectionCategory,
+  InspectionArticleFieldValue,
+  InspectionCheckType,
+  InspectionArticleCategory,
+  InspectionArticleField,
+} from '../Certificate';
 import { convertEnrichedTextToTextRuns } from './utils';
 
 type InspectionArticleColumns = {
@@ -93,69 +99,139 @@ export const createInspectionArticleTable = (
         }),
         ...(() => {
           const dataRows = [];
-          for (const inspectionArticle of inspectionCategory.inspectionArticles) {
+          for (const _inspectionArticle of inspectionCategory.inspectionArticles) {
             let currentColumnIndex = 0;
-            let dataCells = [
-              createInspectionArticleTableCell(
-                inspectionArticle.articleNumber,
-                inspectionArticleColumns[currentColumnIndex].contentAlignment,
-                inspectionArticle.fields.length,
-                0,
-              ),
-            ];
-            for (const field of inspectionArticle.fields) {
-              currentColumnIndex = 1;
+            let dataCells: TableCell[] = [];
 
-              if (typeof field === 'string') {
-                dataCells.push(
-                  createInspectionArticleTableCell(field, AlignmentType.CENTER, 0, inspectionArticleColumns.length - 1),
-                );
-              }
+            if ((_inspectionArticle as InspectionArticleCategory).articleTitle) {
+              const inspectionArticleCategory = _inspectionArticle as InspectionArticleCategory;
 
-              if (typeof field === 'object') {
+              const rowSpan =
+                inspectionArticleCategory.fields.findIndex((field) => field.articleNumber) === -1
+                  ? inspectionArticleCategory.fields.length + 1
+                  : 0;
+
+              dataCells = [
+                createInspectionArticleTableCell(
+                  inspectionArticleCategory.articleNumber,
+                  inspectionArticleColumns[currentColumnIndex].contentAlignment,
+                  rowSpan,
+                  0,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticleCategory.articleTitle,
+                  AlignmentType.CENTER,
+                  0,
+                  inspectionArticleColumns.length - 1,
+                ),
+              ];
+
+              dataRows.push(
+                new TableRow({
+                  children: dataCells,
+                  height: {
+                    value: convertInchesToTwip(inspectionArticleCellHeight),
+                    rule: HeightRule.ATLEAST,
+                  },
+                }),
+              );
+              dataCells = [];
+              currentColumnIndex = 0;
+              inspectionArticleCategory.fields.forEach((field) => {
+                if (field.articleNumber) {
+                  dataCells.push(
+                    createInspectionArticleTableCell(
+                      field.articleNumber,
+                      inspectionArticleColumns[currentColumnIndex].contentAlignment,
+                    ),
+                  );
+                }
+
                 dataCells.push(
                   createInspectionArticleTableCell(
                     field.description,
-                    inspectionArticleColumns[currentColumnIndex].contentAlignment,
-                  ),
-                );
-                dataCells.push(
-                  createInspectionArticleTableCell(
-                    field.inspectionType,
                     inspectionArticleColumns[currentColumnIndex + 1].contentAlignment,
                   ),
-                );
-                dataCells.push(
                   createInspectionArticleTableCell(
-                    field.inspectionKind,
+                    field.inspectionType,
                     inspectionArticleColumns[currentColumnIndex + 2].contentAlignment,
                   ),
-                );
-                dataCells.push(
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK ? 'X' : '',
+                    field.inspectionKind,
                     inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
                   ),
-                );
-                dataCells.push(
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
                   ),
-                );
-                dataCells.push(
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA ? 'X' : '',
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
                   ),
-                );
-                dataCells.push(
                   createInspectionArticleTableCell(
-                    field.templateValues[inspectionCheckType].comments,
+                    field.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA ? 'X' : '',
                     inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
                   ),
+                  createInspectionArticleTableCell(
+                    field.templateValues[inspectionCheckType].comments,
+                    inspectionArticleColumns[currentColumnIndex + 7].contentAlignment,
+                  ),
                 );
-              }
+
+                dataRows.push(
+                  new TableRow({
+                    children: dataCells,
+                    height: {
+                      value: convertInchesToTwip(inspectionArticleCellHeight),
+                      rule: HeightRule.ATLEAST,
+                    },
+                  }),
+                );
+                dataCells = [];
+              });
+            } else {
+              const inspectionArticle = _inspectionArticle as InspectionArticleField;
+
+              dataCells = [
+                createInspectionArticleTableCell(
+                  inspectionArticle.articleNumber!,
+                  inspectionArticleColumns[currentColumnIndex].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.description,
+                  inspectionArticleColumns[currentColumnIndex + 1].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.inspectionType,
+                  inspectionArticleColumns[currentColumnIndex + 2].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.inspectionKind,
+                  inspectionArticleColumns[currentColumnIndex + 3].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.OK
+                    ? 'X'
+                    : '',
+                  inspectionArticleColumns[currentColumnIndex + 4].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NOT_OK
+                    ? 'X'
+                    : '',
+                  inspectionArticleColumns[currentColumnIndex + 5].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.templateValues[inspectionCheckType].value === InspectionArticleFieldValue.NA
+                    ? 'X'
+                    : '',
+                  inspectionArticleColumns[currentColumnIndex + 6].contentAlignment,
+                ),
+                createInspectionArticleTableCell(
+                  inspectionArticle.templateValues[inspectionCheckType].comments,
+                  inspectionArticleColumns[currentColumnIndex + 7].contentAlignment,
+                ),
+              ];
               dataRows.push(
                 new TableRow({
                   children: dataCells,

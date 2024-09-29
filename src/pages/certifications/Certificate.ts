@@ -26,6 +26,7 @@ export enum InspectionCheckType {
 }
 
 export type InspectionArticleField = {
+  articleNumber?: string;
   description: string;
   inspectionType: InspectionType;
   inspectionKind: InspectionKind;
@@ -38,16 +39,15 @@ export type InspectionArticleField = {
   >;
 };
 
-type InpsectionArticleSubCategory = string;
-
-export type InspectionArticle = {
+export type InspectionArticleCategory = {
   articleNumber: string;
-  fields: (InspectionArticleField | InpsectionArticleSubCategory)[];
+  articleTitle: string;
+  fields: InspectionArticleField[];
 };
 
 export type InspectionCategory = {
   name: string;
-  inspectionArticles: InspectionArticle[];
+  inspectionArticles: (InspectionArticleField | InspectionArticleCategory)[];
 };
 
 type InspectionReport = {
@@ -94,11 +94,12 @@ class Certificate {
         {
           name: 'I. ΓΕΝΙΚΑ',
           inspectionArticles: [
-            { articleNumber: '1.', fields: ['ΕΠΙΘΕΩΡΗΣΗ ΕΓΓΡΑΦΩΝ'] },
             {
-              articleNumber: '1.1',
+              articleNumber: '1.',
+              articleTitle: 'ΕΠΙΘΕΩΡΗΣΗ ΕΓΓΡΑΦΩΝ',
               fields: [
                 {
+                  articleNumber: '1.1',
                   description: 'ΜΕΛΕΤΗ – ΣΧΕΔΙΑΓΡΑΜΜΑTA (ΕΛΕΓΧΟΣ ΠΛΗΡΟΤΗΤΑΣ ΜΕΛΕΤΗΣ)',
                   inspectionType: InspectionType.AA,
                   inspectionKind: InspectionKind.A,
@@ -121,12 +122,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '1.2',
-              fields: [
                 {
+                  articleNumber: '1.2',
                   description:
                     'ΠΙΣΤΟΠΟΙΗΤΙΚΑ (ΔΗΛΩΣΗ CE, ΕΞΑΡΤΗΜΑΤΑ, ΥΛΙΚΑ – ΕΛΕΓΧΟΣ ΤΑΥΤΙΣΗΣ ΜΕ ΤΑ ΕΓΚΑΤΕΣΤΗΜΕΝΑ ΥΛΙΚΑ)',
                   inspectionType: InspectionType.AA,
@@ -150,12 +147,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '1.3',
-              fields: [
                 {
+                  articleNumber: '1.3',
                   description: 'ΕΓΧΕΙΡΙΔΙΟ ΛΕΙΤΟΥΡΓΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
@@ -178,12 +171,9 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '1.4',
-              fields: [
                 {
+                  articleNumber: '1.4',
+
                   description: 'ΒΙΒΛΙΟ ΣΥΝΤΗΡΗΣΗΣ & ΕΛΕΓΧΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
@@ -206,12 +196,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '1.5',
-              fields: [
                 {
+                  articleNumber: '1.5',
                   description: 'ΑΔΕΙΟΥΧΟΣ ΧΕΙΡΙΣΤΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.A,
@@ -236,11 +222,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '2.', fields: ['ΣΗΜΑΝΣΗ'] },
             {
-              articleNumber: '2.1',
+              articleNumber: '2.',
+              articleTitle: 'ΣΗΜΑΝΣΗ',
               fields: [
                 {
+                  articleNumber: '2.1',
                   description: 'ΠΙΝΑΚΙΔΙΟ ΣΤΟΙΧΕΙΩΝ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -263,12 +250,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '2.2',
-              fields: [
                 {
+                  articleNumber: '2.2',
                   description: 'ΈΝΔΕΙΞΗ ΑΝΥΨΩΤΙΚΗΣ ΙΚΑΝΟΤΗΤΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -291,12 +274,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '2.3',
-              fields: [
                 {
+                  articleNumber: '2.3',
                   description: 'ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΕΣ ΣΗΜΑΝΣΕΙΣ - ΜΕΤΡΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -323,8 +302,8 @@ class Certificate {
             },
             {
               articleNumber: '3.',
+              articleTitle: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ & ΜΗΧΑΝΟΛΟΓΙΚΟΣ ΕΞΟΠΛΙΣΜΟΣ',
               fields: [
-                'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ & ΜΗΧΑΝΟΛΟΓΙΚΟΣ ΕΞΟΠΛΙΣΜΟΣ',
                 {
                   description: 'ΟΠΤΙΚΟΣ ΕΛΕΓΧΟΣ ΚΑΤΑΣΤΑΣΗΣ & ΜΕΤΑΤΡΟΠΩΝ',
                   inspectionType: InspectionType.AA_AB,
@@ -373,11 +352,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.1', fields: ['ΒΑΣΗ, ΚΟΡΜΟΣ & ΒΡΑΧΙΩΝΕΣ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ'] },
             {
-              articleNumber: '3.1.1',
+              articleNumber: '3.1',
+              articleTitle: 'ΒΑΣΗ, ΚΟΡΜΟΣ & ΒΡΑΧΙΩΝΕΣ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ',
               fields: [
                 {
+                  articleNumber: '3.1.1',
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -400,12 +380,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.1.2',
-              fields: [
                 {
+                  articleNumber: '3.1.2',
                   description: 'ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -428,12 +404,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.1.3',
-              fields: [
                 {
+                  articleNumber: '3.1.3',
                   description: 'ΣΥΝΔΕΣΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -456,12 +428,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.1.4',
-              fields: [
                 {
+                  articleNumber: '3.1.4',
                   description: 'ΜΕΣΑ ΑΝΥΨΩΣΗΣ (ΣΥΡΜΑΤΟΣΧΟΙΝΑ, ΑΛΥΣΙΔΕΣ, ΕΜΒΟΛΑ)',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -484,12 +452,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.1.5',
-              fields: [
                 {
+                  articleNumber: '3.1.5',
                   description: 'ΑΠΟΣΒΕΣΤΗΡΕΣ - ΤΕΡΜΑΤΑ ΔΙΑΔΡΟΜΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -514,11 +478,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.2', fields: ['ΔΙΑΔΡΟΜΗ ΚΙΝΗΣΗΣ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ'] },
             {
-              articleNumber: '3.2.1',
+              articleNumber: '3.2',
+              articleTitle: 'ΔΙΑΔΡΟΜΗ ΚΙΝΗΣΗΣ ΑΝΥΨΩΤΙΚΟΥ ΜΗΧΑΝΗΜΑΤΟΣ',
               fields: [
                 {
+                  articleNumber: '3.2.1',
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -541,12 +506,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.2.2',
-              fields: [
                 {
+                  articleNumber: '3.2.2',
                   description: 'ΣΥΝΔΕΣΜΟΙ - ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -569,12 +530,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.2.3',
-              fields: [
                 {
+                  articleNumber: '3.2.3',
                   description: 'ΚΙΝΗΤΗΡΙΟΣ ΜΗΧΑΝΙΣΜΟΣ, ΦΡΕΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -597,12 +554,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.2.4',
-              fields: [
                 {
+                  articleNumber: '3.2.4',
                   description: 'ΤΡΟΧΙΕΣ, ΟΔΗΓΟΙ, ΡΑΟΥΛΑ, ΤΡΟΧΟΙ ΚΙΝΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -625,12 +578,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.2.5',
-              fields: [
                 {
+                  articleNumber: '3.2.5',
                   description: 'ΟΡΙΟΘΕΤΕΣ, ΑΠΟΣΒΕΣΤΗΡΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -653,12 +602,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.2.6',
-              fields: [
                 {
+                  articleNumber: '3.2.6',
                   description: 'ΣΥΣΤΗΜΑΤΑ ΑΣΦΑΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -683,11 +628,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.3', fields: ['ΦΟΡΕΙΟ - ΑΝΥΨΩΤΙΚΟΣ ΜΗΧΑΝΙΣΜΟΣ'] },
             {
-              articleNumber: '3.3.1',
+              articleNumber: '3.3',
+              articleTitle: 'ΦΟΡΕΙΟ - ΑΝΥΨΩΤΙΚΟΣ ΜΗΧΑΝΙΣΜΟΣ',
               fields: [
                 {
+                  articleNumber: '3.3.1',
                   description: 'ΔΟΜΙΚΑ ΣΤΟΙΧΕΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -710,12 +656,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.3.2',
-              fields: [
                 {
+                  articleNumber: '3.3.2',
                   description: 'ΒΑΡΟΥΛΚΟ, ΤΡΟΧΑΛΙΕΣ - ΡΑΟΥΛΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -738,12 +680,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.3.3',
-              fields: [
                 {
+                  articleNumber: '3.3.3',
                   description: 'ΦΡΕΝΑ (ΚΑΤΑΣΤΑΣΗ, ΛΕΙΤΟΥΡΓΙΚΟΣ ΕΛΕΓΧΟΣ)',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -766,12 +704,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.3.4',
-              fields: [
                 {
+                  articleNumber: '3.3.4',
                   description: 'ΣΥΓΚΟΛΛΗΣΕΙΣ - ΣΥΝΔΕΣΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -796,11 +730,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.4', fields: ['ΔΙΑΔΡΟΜΗ ΦΟΡΕΙΟΥ'] },
             {
-              articleNumber: '3.4.1',
+              articleNumber: '3.4',
+              articleTitle: 'ΔΙΑΔΡΟΜΗ ΦΟΡΕΙΟΥ',
               fields: [
                 {
+                  articleNumber: '3.4.1',
                   description: 'ΣΙΔΗΡΟΤΡΟΧΙΕΣ, ΡΑΟΥΛΑ - ΤΡΟΧΟΙ ΚΙΝΗΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -823,12 +758,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.4.2',
-              fields: [
                 {
+                  articleNumber: '3.4.2',
                   description: 'ΑΠΟΣΒΕΣΤΗΡΕΣ - ΤΕΡΜΑΤΑ ΔΙΑΔΡΟΜΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -851,12 +782,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.4.3',
-              fields: [
                 {
+                  articleNumber: '3.4.3',
                   description: 'ΣΥΝΔΕΣΜΟΙ - ΣΥΓΚΟΛΛΗΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -879,12 +806,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.4.4',
-              fields: [
                 {
+                  articleNumber: '3.4.4',
                   description: 'ΚΙΝΗΤΗΡΙΟΣ ΜΗΧΑΝΙΣΜΟΣ, ΦΡΕΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -907,12 +830,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.4.5',
-              fields: [
                 {
+                  articleNumber: '3.4.5',
                   description: 'ΣΥΣΤΗΜΑΤΑ ΑΣΦΑΛΙΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -937,11 +856,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.5', fields: ['ΜΕΣΑ ΠΡΟΣΒΑΣΗΣ'] },
             {
-              articleNumber: '3.5.1',
+              articleNumber: '3.5',
+              articleTitle: 'ΜΕΣΑ ΠΡΟΣΒΑΣΗΣ',
               fields: [
                 {
+                  articleNumber: '3.5.1',
                   description: 'ΣΚΑΛΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -964,12 +884,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.5.2',
-              fields: [
                 {
+                  articleNumber: '3.5.2',
                   description: 'ΔΙΑΔΡΟΜΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -992,12 +908,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.5.3',
-              fields: [
                 {
+                  articleNumber: '3.5.3',
                   description: 'ΆΛΛΑ ΜΕΣΑ - ΠΛΑΤΦΟΡΜΕΣ ΕΡΓΑΣΙΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1022,11 +934,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '3.6', fields: ['ΑΛΛΑ ΣΤΟΙΧΕΙΑ'] },
             {
-              articleNumber: '3.6.1',
+              articleNumber: '3.6',
+              articleTitle: 'ΑΛΛΑ ΣΤΟΙΧΕΙΑ',
               fields: [
                 {
+                  articleNumber: '3.6.1',
                   description: 'ΤΡΟΧΟΙ ΠΟΡΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1049,12 +962,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.2',
-              fields: [
                 {
+                  articleNumber: '3.6.2',
                   description: 'ΜΕΣΑ ΕΥΣΤΑΘΕΙΑΣ - ΑΝΑΒΟΛΕΙΣ ΠΤΩΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1077,12 +986,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.3',
-              fields: [
                 {
+                  articleNumber: '3.6.3',
                   description: 'ΆΞΟΝΕΣ - ΣΥΝΔΕΣΜΟΛΟΓΙΑ ΑΞΟΝΩΝ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1105,12 +1010,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.4',
-              fields: [
                 {
+                  articleNumber: '3.6.4',
                   description: 'ΤΥΜΠΑΝΑ ΠΕΡΙΕΛΙΞΕΩΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1133,12 +1034,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.5',
-              fields: [
                 {
+                  articleNumber: '3.6.5',
                   description: 'ΤΡΟΧΑΛΙΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1161,12 +1058,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.6',
-              fields: [
                 {
+                  articleNumber: '3.6.6',
                   description: 'ΟΔΟΝΤΩΤΟΙ ΤΡΟΧΟΙ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1189,12 +1082,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.7',
-              fields: [
                 {
+                  articleNumber: '3.6.7',
                   description: 'ΚΟΧΛΙΕΣ, ΠΕΡΙΚΟΧΛΙΑ, ΣΦΗΝΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1217,12 +1106,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.8',
-              fields: [
                 {
+                  articleNumber: '3.6.8',
                   description: 'ΥΔΡΑΥΛΙΚΑ &amp; ΠΝΕΥΜΑΤΙΚΑ ΣΥΣΤΗΜΑΤΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1245,12 +1130,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.9',
-              fields: [
                 {
+                  articleNumber: '3.6.9',
                   description:
                     'ΣΥΣΤΗΜΑΤΑ ΑΥΤΟΜΑΤΗΣ ΠΡΟΕΙΔΟΠΟΙΗΣΗΣ, ΣΥΣΤΗΜΑΤΑ ΟΡΙΑΚΟΥ ΤΕΡΜΑΤΙΣΜΟΥ, ΠΡΟΣΤΑΣΙΑ ΥΠΕΡΦΟΡΤΙΣΗΣ, ΒΑΛΒΙΔΑ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
@@ -1277,12 +1158,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.6.10',
-              fields: [
                 {
+                  articleNumber: '3.6.10',
                   description: 'ΠΡΟΦΥΛΑΚΤΗΡΕΣ & ΣΥΣΤΗΜΑΤΑ ΠΡΟΣΤΑΣΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1305,12 +1182,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.7',
-              fields: [
                 {
+                  articleNumber: '3.7',
                   description: 'ΣΥΣΤΗΜΑΤΑ ΛΙΠΑΝΣΗΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1333,12 +1206,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.8',
-              fields: [
                 {
+                  articleNumber: '3.8',
                   description: 'ΑΠΟΣΤΑΣΕΙΣ ΑΣΦΑΛΕΙΑΣ, ΠΡΟΦΥΛΑΚΤΗΡΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1361,12 +1230,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.9',
-              fields: [
                 {
+                  articleNumber: '3.9',
                   description: 'ΈΔΡΑΣΗ - ΑΓΚΥΡΩΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1389,12 +1254,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '3.10',
-              fields: [
                 {
+                  articleNumber: '3.10',
                   description: 'ΛΗΨΗ ΜΕΤΡΩΝ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1419,11 +1280,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '4.', fields: ['ΗΛΕΚΤΡΟΛΟΓΙΚΟΣ ΕΞΟΠΛΙΣΜΟΣ - ΧΕΙΡΙΣΤΗΡΙΑ'] },
             {
-              articleNumber: '4.1',
+              articleNumber: '4.',
+              articleTitle: 'ΗΛΕΚΤΡΟΛΟΓΙΚΟΣ ΕΞΟΠΛΙΣΜΟΣ - ΧΕΙΡΙΣΤΗΡΙΑ',
               fields: [
                 {
+                  articleNumber: '4.1',
                   description: 'ΔΙΑΚΟΠΤΕΣ & ΕΝΕΡΓΟΠΟΙΗΤΕΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1446,12 +1308,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.2',
-              fields: [
                 {
+                  articleNumber: '4.2',
                   description: 'ΓΡΑΜΜΕΣ ΤΡΟΦΟΔΟΣΙΑΣ, ΓΕΙΩΣΕΙΣ, ΜΟΝΩΣΕΙΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1474,12 +1332,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.3',
-              fields: [
                 {
+                  articleNumber: '4.3',
                   description: 'ΠΙΝΑΚΕΣ, ΚΑΤΑΝΑΛΩΤΕΣ ΙΣΧΥΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1502,12 +1356,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.4',
-              fields: [
                 {
+                  articleNumber: '4.4',
                   description: 'ΣΥΣΤΗΜΑΤΑ, ΔΙΑΚΟΠΤΕΣ ΑΣΦΑΛΕΙΑΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1530,12 +1380,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.5',
-              fields: [
                 {
+                  articleNumber: '4.5',
                   description: 'ΧΕΙΡΙΣΤΗΡΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1558,12 +1404,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.6',
-              fields: [
                 {
+                  articleNumber: '4.6',
                   description: 'ΘΑΛΑΜΟΙ ΧΕΙΡΙΣΜΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1586,12 +1428,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.7',
-              fields: [
                 {
+                  articleNumber: '4.7',
                   description: 'ΦΩΤΙΣΜΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1614,12 +1452,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '4.8',
-              fields: [
                 {
+                  articleNumber: '4.8',
                   description: 'ΓΕΙΩΣΗ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1644,11 +1478,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '5.', fields: ['ΕΞΟΠΛΙΣΜΟΣ ΧΕΙΡΙΣΜΟΥ ΦΟΡΤΙΟΥ'] },
             {
-              articleNumber: '5.1',
+              articleNumber: '5.',
+              articleTitle: 'ΕΞΟΠΛΙΣΜΟΣ ΧΕΙΡΙΣΜΟΥ ΦΟΡΤΙΟΥ',
               fields: [
                 {
+                  articleNumber: '5.1',
                   description: 'ΣΥΡΜΑΤΟΣΧΟΙΝΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1671,12 +1506,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '5.2',
-              fields: [
                 {
+                  articleNumber: '5.2',
                   description: 'ΆΛΛΑ ΕΞΑΡΤΗΜΑΤΑ ΑΝΑΡΤΗΣΗΣ ΦΟΡΤΙΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1699,12 +1530,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '5.3',
-              fields: [
                 {
+                  articleNumber: '5.3',
                   description: 'ΑΓΚΙΣΤΡΑ, ΑΡΠΑΓΕΣ ΚΑΙ ΥΠΟΛΟΙΠΟΣ ΣΥΝΑΦΗΣ ΕΞΟΠΛΙΣΜΟΣ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1729,11 +1556,12 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '6.', fields: ['ΠΡΟΣΤΑΣΙΑ ΟΔΗΓΟΥ'] },
             {
-              articleNumber: '6.1',
+              articleNumber: '6.',
+              articleTitle: 'ΠΡΟΣΤΑΣΙΑ ΟΔΗΓΟΥ',
               fields: [
                 {
+                  articleNumber: '6.1',
                   description: 'ΠΡΟΣΤΑΣΙΑ ΚΑΜΠΙΝΑΣ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1756,12 +1584,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '6.2',
-              fields: [
                 {
+                  articleNumber: '6.2',
                   description: 'ΘΕΣΗ ΟΔΗΓΟΥ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1784,12 +1608,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '6.3',
-              fields: [
                 {
+                  articleNumber: '6.3',
                   description: 'ΧΕΙΡΙΣΤΗΡΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1812,12 +1632,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '6.4',
-              fields: [
                 {
+                  articleNumber: '6.4',
                   description: 'ΑΝΤΙΕΚΡΗΚΤΙΚΗ ΠΡΟΣΤΑΣΙΑ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O,
@@ -1840,12 +1656,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '6.5',
-              fields: [
                 {
+                  articleNumber: '6.5',
                   description: 'ΣΥΣΤΗΜΑ ΠΡΟΣΤΑΣΙΑΣ & ΕΙΔΟΠΟΙΗΣΗΣ ΧΕΙΡΙΣΤΗ',
                   inspectionType: InspectionType.AA_AB,
                   inspectionKind: InspectionKind.O_L,
@@ -1870,11 +1682,13 @@ class Certificate {
                 },
               ],
             },
-            { articleNumber: '7.', fields: ['ΔΟΚΙΜΕΣ ΑΝΥΨΩΣΗΣ ΦΟΡΤΙΟΥ'] },
+
             {
-              articleNumber: '7.1',
+              articleNumber: '7.',
+              articleTitle: 'ΔΟΚΙΜΕΣ ΑΝΥΨΩΣΗΣ ΦΟΡΤΙΟΥ',
               fields: [
                 {
+                  articleNumber: '7.1',
                   description: 'ΈΛΕΓΧΟΣ ΒΑΡΩΝ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
@@ -1897,12 +1711,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.1.1',
-              fields: [
                 {
+                  articleNumber: '7.1.1',
                   description: 'ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
@@ -1925,12 +1735,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.1.2',
-              fields: [
                 {
+                  articleNumber: '7.1.2',
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΖΥΓΙΣΗ ΣΕ ΔΙΑΚΡΙΒΩΜΕΝΗ ΠΛΑΣΤΙΓΚΑ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
@@ -1953,12 +1759,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.1.3',
-              fields: [
                 {
+                  articleNumber: '7.1.3',
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΣΥΓΚΡΙΣΗ ΜΕ ΔΙΑΚΡΙΒΩΜΕΝΑ ΑΝΤΙΒΑΡΑ ΓΕΡΑΝΩΝ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
@@ -1981,12 +1783,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.1.4',
-              fields: [
                 {
+                  articleNumber: '7.1.4',
                   description: 'ΜΗ ΔΙΑΚΡΙΒΩΜΕΝΑ ΒΑΡΗ - ΑΛΛΟ:',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O,
@@ -2009,12 +1807,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.2',
-              fields: [
                 {
+                  articleNumber: '7.2',
                   description: 'ΣΤΑΤΙΚH ΔΟΚΙΜH',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
@@ -2029,7 +1823,7 @@ class Certificate {
                         'Η στατική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
                         '<b><u>1,25 x P για P ≤ 20 TONS</u></b>\n' +
                         '<b><u>επί το φορτίο πιστοποίησης.</u></b>\n' +
-                        'Το φορτίο που χρησιμοποιήθηκε για ην διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για την διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
                         '<b>3,925 tons at 10,40 m R</b>\n' +
                         '<b>2,162 tons at 16,75 m R</b>\n' +
                         '<b>0,82 tons at 24,85 m R Fly Jib</b>\n' +
@@ -2041,7 +1835,7 @@ class Certificate {
                         'Η στατική δοκιμή πραγματοποιήθηκε με βάρος:\n' +
                         '<b><u>1,25 x P για P ≤ 20 TONS</u></b>\n' +
                         '<b><u>επί το φορτίο πιστοποίησης.</u></b>\n' +
-                        'Το φορτίο που χρησιμοποιήθηκε για ην διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
+                        'Το φορτίο που χρησιμοποιήθηκε για την διεξαγωγή της στατικής δοκιμής, ήταν:\n' +
                         '<b>3,925 tons at 10,40 m R</b>\n' +
                         '<b>2,162 tons at 16,75 m R</b>\n' +
                         '<b>0,82 tons at 24,85 m R Fly Jib</b>\n' +
@@ -2053,12 +1847,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.2α',
-              fields: [
                 {
+                  articleNumber: '7.2α',
                   description: 'ΈΛΕΓΧΟΣ ΒΕΛΟΥΣ ΚΑΜΨΗΣ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.O_L,
@@ -2081,12 +1871,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.3',
-              fields: [
                 {
+                  articleNumber: '7.3',
                   description: 'ΔΥΝΑΜΙΚH ΔΟΚΙΜH',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
@@ -2123,12 +1909,8 @@ class Certificate {
                     },
                   },
                 },
-              ],
-            },
-            {
-              articleNumber: '7.4',
-              fields: [
                 {
+                  articleNumber: '7.4',
                   description: 'ΔΟΚΙΜH ΕΥΣΤΑΘΕΙΑΣ',
                   inspectionType: InspectionType.AA_A,
                   inspectionKind: InspectionKind.L,
@@ -2166,143 +1948,123 @@ class Certificate {
           inspectionArticles: [
             {
               articleNumber: '1.',
-              fields: [
-                {
-                  description: 'ΜΕΣΑ ΕΥΣΤΑΘΕΙΑΣ, ΑΝΑΒΟΛΕΙΣ ΠΤΩΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                  },
+              description: 'ΜΕΣΑ ΕΥΣΤΑΘΕΙΑΣ, ΑΝΑΒΟΛΕΙΣ ΠΤΩΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.',
-              fields: [
-                {
-                  description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΑ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΑ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.',
-              fields: [
-                {
-                  description: 'ΣΥΣΤΗΜΑ ΕΛΕΓΧΟΥ ΑΝΥΨΩΣΗΣ ΑΠΟ ΤΟ ΘΑΛΑΜΟ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΥΣΤΗΜΑ ΕΛΕΓΧΟΥ ΑΝΥΨΩΣΗΣ ΑΠΟ ΤΟ ΘΑΛΑΜΟ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '4.',
-              fields: [
-                {
-                  description: 'ΣΚΕΛΕΤΟΣ ΟΧΗΜΑΤΟΣ, ΤΡΟΧΟΙ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.OK,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΚΕΛΕΤΟΣ ΟΧΗΜΑΤΟΣ, ΤΡΟΧΟΙ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.OK,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '5.',
-              fields: [
-                {
-                  description: 'ΠΡΟΣΤΑΣΙΑ ΚΑΜΠΙΝΑΣ ΟΔΗΓΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΠΡΟΣΤΑΣΙΑ ΚΑΜΠΙΝΑΣ ΟΔΗΓΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
           ],
         },
@@ -2311,423 +2073,363 @@ class Certificate {
           inspectionArticles: [
             {
               articleNumber: '1.',
-              fields: [
-                {
-                  description: 'ΌΧΗΜΑ, ΠΛΑΙΣΙΟ ΑΝΥΨΩΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΌΧΗΜΑ, ΠΛΑΙΣΙΟ ΑΝΥΨΩΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.1',
-              fields: [
-                {
-                  description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΙΣΤΟΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΙΣΤΟΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.2',
-              fields: [
-                {
-                  description: 'ΡΑΟΥΛΑ ΚΥΛΙΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΡΑΟΥΛΑ ΚΥΛΙΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.3',
-              fields: [
-                {
-                  description: 'ΈΔΡΑΣΗ ΤΡΟΧΩΝ ΚΥΛΙΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΈΔΡΑΣΗ ΤΡΟΧΩΝ ΚΥΛΙΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.4',
-              fields: [
-                {
-                  description: 'ΡΑΟΥΛΑ ΑΛΥΣΙΔΩΝ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΡΑΟΥΛΑ ΑΛΥΣΙΔΩΝ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.5',
-              fields: [
-                {
-                  description: 'ΑΛΥΣΙΔΑ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΑΛΥΣΙΔΑ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '1.6',
-              fields: [
-                {
-                  description: 'ΦΡΕΝΑ ΟΧΗΜΑΤΟΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΦΡΕΝΑ ΟΧΗΜΑΤΟΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.',
-              fields: [
-                {
-                  description: 'ΣΥΣΤΗΜΑ ΦΟΡΤΙΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΥΣΤΗΜΑ ΦΟΡΤΙΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.1',
-              fields: [
-                {
-                  description: 'ΦΟΡΕΑΣ ΠΕΡΟΝΩΝ, ΠΕΡΟΝΕΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΦΟΡΕΑΣ ΠΕΡΟΝΩΝ, ΠΕΡΟΝΕΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.2',
-              fields: [
-                {
-                  description: 'ΈΛΕΓΧΟΣ ΥΠΕΡΦΟΡΤΩΣΗΣ, ΕΠΙΠΛΕΟΝ ΕΠΙΣΚΕΥΕΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΈΛΕΓΧΟΣ ΥΠΕΡΦΟΡΤΩΣΗΣ, ΕΠΙΠΛΕΟΝ ΕΠΙΣΚΕΥΕΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.',
-              fields: [
-                {
-                  description: 'ΠΡΟΣΤΑΣΙΑ ΟΔΗΓΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΠΡΟΣΤΑΣΙΑ ΟΔΗΓΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.1',
-              fields: [
-                {
-                  description: 'ΠΡΟΣΤΑΤΕΥΤΙΚΟ ΔΙΚΤΥΩΜΑ ‘Η ΚΟΥΒΟΥΚΛΙΟ ΘΕΣΗΣ ΟΔΗΓΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΠΡΟΣΤΑΤΕΥΤΙΚΟ ΔΙΚΤΥΩΜΑ ‘Η ΚΟΥΒΟΥΚΛΙΟ ΘΕΣΗΣ ΟΔΗΓΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.2',
-              fields: [
-                {
-                  description: 'ΘΕΣΗ ΟΔΗΓΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΘΕΣΗ ΟΔΗΓΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.3',
-              fields: [
-                {
-                  description: 'ΠΡΟΣΤΑΣΙΑ ΠΥΡΚΑΓΙΑΣ, ΠΡΟΣΤΑΣΙΑ ΣΤΑΤΙΚΟΥ ΗΛΕΚΤΡΙΣΜΟΥ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΠΡΟΣΤΑΣΙΑ ΠΥΡΚΑΓΙΑΣ, ΠΡΟΣΤΑΣΙΑ ΣΤΑΤΙΚΟΥ ΗΛΕΚΤΡΙΣΜΟΥ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.4',
-              fields: [
-                {
-                  description: 'ΑΝΤΙΕΚΡΗΚΤΙΚΗ ΠΡΟΣΤΑΣΙΑ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΑΝΤΙΕΚΡΗΚΤΙΚΗ ΠΡΟΣΤΑΣΙΑ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
           ],
         },
@@ -2736,59 +2438,51 @@ class Certificate {
           inspectionArticles: [
             {
               articleNumber: '1.',
-              fields: [
-                {
-                  description: 'ΔΙΚΤΥΟ ΣΚΥΡΟΔΕΜΑΤΟΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΔΙΚΤΥΟ ΣΚΥΡΟΔΕΜΑΤΟΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.',
-              fields: [
-                {
-                  description: 'ΣΗΜΑΝΣΕΙΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΗΜΑΝΣΕΙΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
           ],
         },
@@ -2797,143 +2491,123 @@ class Certificate {
           inspectionArticles: [
             {
               articleNumber: '1.',
-              fields: [
-                {
-                  description: 'ΣΥΣΤΗΜΑ ΔΙΕΥΘΥΝΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΥΣΤΗΜΑ ΔΙΕΥΘΥΝΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '2.',
-              fields: [
-                {
-                  description: 'ΣΥΣΤΗΜΑ ΑΝΑΡΤΗΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΥΣΤΗΜΑ ΑΝΑΡΤΗΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '3.',
-              fields: [
-                {
-                  description: 'ΣΥΣΤΗΜΑ ΠΕΔΗΣΗΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΣΥΣΤΗΜΑ ΠΕΔΗΣΗΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '4.',
-              fields: [
-                {
-                  description: 'ΤΡΟΧΟΙ, ΕΛΑΣΤΙΚΑ, ΕΡΠΥΣΤΡΙΕΣ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΤΡΟΧΟΙ, ΕΛΑΣΤΙΚΑ, ΕΡΠΥΣΤΡΙΕΣ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
             {
               articleNumber: '5.',
-              fields: [
-                {
-                  description: 'ΦΩΤΑ',
-                  inspectionType: InspectionType.AA_AB,
-                  inspectionKind: InspectionKind.O_L,
-                  templateValues: {
-                    DEFAULT: {
-                      value: undefined,
-                      comments: '',
-                    },
-                    [InspectionCheckType.AA]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.A]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                    [InspectionCheckType.B]: {
-                      value: InspectionArticleFieldValue.NA,
-                      comments: '',
-                    },
-                  },
+              description: 'ΦΩΤΑ',
+              inspectionType: InspectionType.AA_AB,
+              inspectionKind: InspectionKind.O_L,
+              templateValues: {
+                DEFAULT: {
+                  value: undefined,
+                  comments: '',
                 },
-              ],
+                [InspectionCheckType.AA]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.A]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+                [InspectionCheckType.B]: {
+                  value: InspectionArticleFieldValue.NA,
+                  comments: '',
+                },
+              },
             },
           ],
         },

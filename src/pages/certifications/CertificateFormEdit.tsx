@@ -9,18 +9,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import FormHelperText from '@mui/material/FormHelperText';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
 
 // project imports
 import IconButton from 'components/@extended/IconButton';
 import { deleteCertificate } from 'utils/db';
 import Certificate, {
+  InspectionArticleCategory,
   InspectionArticleField,
   InspectionArticleFieldValue,
   InspectionCheckType,
@@ -28,12 +30,16 @@ import Certificate, {
   InspectionType,
 } from './Certificate';
 
+// third party
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 // assets
 import DeleteFilled from '@ant-design/icons/DeleteFilled';
 
 import { useFormik, Form, FormikProvider } from 'formik';
 import { ThemeMode } from '@config';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export type CertificateFormEditProps = {
   certificate?: Certificate;
@@ -53,16 +59,60 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
   const formik = useFormik({
     initialValues: certificate!,
     enableReinitialize: true,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (values) => {
       console.log('SUBMIT THAT SHIT', values);
       closeModal();
     },
   });
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = formik;
+  const { handleSubmit, setFieldValue } = formik;
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  const handleCategoryChange = useCallback(
+    (name: string) => () => {
+      setExpanded(expanded === name ? false : name);
+    },
+    [expanded],
+  );
+
+  const handleSubCategoryChange = useCallback(
+    (name: string) => () => {
+      setSubExpanded(subExpanded === name ? false : name);
+    },
+    [subExpanded],
+  );
+
+  const handleEvaluationChange = useCallback(
+    (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) => (event) => {
+      if (fieldIndex !== undefined) {
+        setFieldValue(
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].templateValues[${certificate!._inspectionCheckType}].value`,
+          event.target.value,
+        );
+      } else {
+        setFieldValue(
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].templateValues[${certificate!._inspectionCheckType}].value`,
+          event.target.value,
+        );
+      }
+    },
+    [setFieldValue, certificate],
+  );
+
+  const handleCommentsChange = useCallback(
+    (inspectionCategoryIndex: number, inspectionArticleIndex: number, fieldIndex?: number) => (comment: string) => {
+      if (fieldIndex !== undefined) {
+        setFieldValue(
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].templateValues[${certificate!._inspectionCheckType}].comments`,
+          comment,
+        );
+      } else {
+        setFieldValue(
+          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].templateValues[${certificate!._inspectionCheckType}].comments`,
+          comment,
+        );
+      }
+    },
+    [setFieldValue, certificate],
+  );
 
   return (
     <FormikProvider value={formik}>
@@ -78,118 +128,308 @@ export const CertificateFormEdit: React.FC<CertificateFormEditProps> = ({
               return (
                 <Accordion
                   expanded={expanded === inspectionCategory.name}
-                  onChange={handleChange(inspectionCategory.name)}
+                  onChange={handleCategoryChange(inspectionCategory.name)}
                   key={inspectionCategory.name}
                 >
-                  <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                  <AccordionSummary style={{ paddingLeft: 8 }} aria-controls="panel1d-content" id="panel1d-header">
                     <Typography variant="h6">{inspectionCategory.name}</Typography>
                   </AccordionSummary>
                   {expanded === inspectionCategory.name && (
-                    <AccordionDetails>
+                    <AccordionDetails
+                      style={{ paddingLeft: 8, paddingRight: 0, paddingBottom: 0, borderTop: 0, paddingTop: 0 }}
+                    >
                       {inspectionCategory.inspectionArticles.map((inspectionArticle, inspectionArticleIndex) => {
-                        return inspectionArticle.fields.map((field, fieldIndex) => {
-                          return typeof field === 'string' ? (
-                            <Stack
-                              key={`${inspectionArticle.articleNumber}-${field}`}
-                              direction="row"
-                              spacing={2}
-                              alignItems="center"
+                        if ((inspectionArticle as InspectionArticleCategory).articleTitle) {
+                          const _inspectionArticle = inspectionArticle as InspectionArticleCategory;
+                          return (
+                            <Accordion
+                              expanded={subExpanded === _inspectionArticle.articleTitle}
+                              onChange={handleSubCategoryChange(_inspectionArticle.articleTitle)}
+                              key={_inspectionArticle.articleTitle}
                             >
-                              <Typography variant="h6">{inspectionArticle.articleNumber}</Typography>
-                              <Typography variant="h6">{field}</Typography>
-                            </Stack>
-                          ) : (
+                              <AccordionSummary
+                                style={{ paddingLeft: 8 }}
+                                aria-controls="panel2d-content"
+                                id="panel2d-header"
+                              >
+                                <Typography variant="h6">
+                                  {_inspectionArticle.articleNumber} {_inspectionArticle.articleTitle}
+                                </Typography>
+                              </AccordionSummary>
+                              {subExpanded === _inspectionArticle.articleTitle && (
+                                <AccordionDetails style={{ paddingLeft: 8, paddingRight: 0, paddingBottom: 0 }}>
+                                  {_inspectionArticle.fields.map((field, fieldIndex) => (
+                                    <Stack
+                                      key={`${field.articleNumber}-${field.description}`}
+                                      direction={'column'}
+                                      alignItems={'flex-start'}
+                                      spacing={2}
+                                      sx={{ marginBottom: '15px' }}
+                                    >
+                                      <Stack direction="row" spacing={2} alignItems="center">
+                                        <Typography variant="h6">{field.articleNumber}</Typography>
+                                        <Typography variant="h6">{field.description}</Typography>
+                                      </Stack>
+
+                                      <Grid container direction={'row'} width={'100%'} columnGap={4} rowGap={2}>
+                                        <Grid
+                                          item
+                                          alignItems={'center'}
+                                          md={'auto'}
+                                          paddingLeft={0}
+                                          columnGap={8}
+                                          display={'flex'}
+                                          flexDirection={'row'}
+                                          justifyContent={'space-between'}
+                                        >
+                                          <Stack direction={'column'} spacing={2} maxWidth={100}>
+                                            <Stack spacing={1}>
+                                              <FormHelperText>Τύπος Ελέγχου</FormHelperText>
+                                              <Typography
+                                                sx={{
+                                                  textAlign: 'center',
+                                                  padding: '6px',
+                                                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                                                }}
+                                                variant="h6"
+                                              >
+                                                {field.inspectionType}
+                                              </Typography>
+                                            </Stack>
+                                            <Stack spacing={1}>
+                                              <FormHelperText>Είδος Ελέγχου</FormHelperText>
+                                              <Typography
+                                                sx={{
+                                                  textAlign: 'center',
+                                                  padding: '6px',
+                                                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                                                }}
+                                                variant="h6"
+                                              >
+                                                {field.inspectionKind}
+                                              </Typography>
+                                            </Stack>
+                                          </Stack>
+
+                                          <Stack>
+                                            <FormHelperText>Αξιολόγηση</FormHelperText>
+                                            <FormControl margin="dense">
+                                              <RadioGroup
+                                                row
+                                                aria-label="inspectionFieldEvaluation"
+                                                value={
+                                                  (
+                                                    formik.values._inspectionReport.inspectionCategories[
+                                                      inspectionCategoryIndex
+                                                    ].inspectionArticles[
+                                                      inspectionArticleIndex
+                                                    ] as InspectionArticleCategory
+                                                  ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
+                                                    .value
+                                                }
+                                                onChange={handleEvaluationChange(
+                                                  inspectionCategoryIndex,
+                                                  inspectionArticleIndex,
+                                                  fieldIndex,
+                                                )}
+                                                name="inspectionFieldEvaluation"
+                                                id="inspectionFieldEvaluation"
+                                              >
+                                                <FormControlLabel
+                                                  value={InspectionArticleFieldValue.OK}
+                                                  control={<Radio color="success" />}
+                                                  label={InspectionArticleFieldValue.OK}
+                                                />
+                                                <FormControlLabel
+                                                  value={InspectionArticleFieldValue.NOT_OK}
+                                                  control={<Radio color="error" />}
+                                                  label={InspectionArticleFieldValue.NOT_OK}
+                                                />
+                                                <FormControlLabel
+                                                  value={InspectionArticleFieldValue.NA}
+                                                  control={<Radio color="secondary" />}
+                                                  label={InspectionArticleFieldValue.NA}
+                                                />
+                                              </RadioGroup>
+                                            </FormControl>
+                                          </Stack>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6} alignContent={'center'} paddingLeft={0}>
+                                          {(
+                                            formik.values._inspectionReport.inspectionCategories[
+                                              inspectionCategoryIndex
+                                            ].inspectionArticles[inspectionArticleIndex] as InspectionArticleCategory
+                                          ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
+                                            .value !== InspectionArticleFieldValue.NA ? (
+                                            <Stack spacing={1}>
+                                              <FormHelperText>Παρατηρήσεις</FormHelperText>
+                                              <ReactQuill
+                                                style={{ minWidth: '300px' }}
+                                                modules={{
+                                                  toolbar: [['bold', 'italic', 'underline', 'strike']],
+                                                }}
+                                                onChange={handleCommentsChange(
+                                                  inspectionCategoryIndex,
+                                                  inspectionArticleIndex,
+                                                  fieldIndex,
+                                                )}
+                                                value={
+                                                  (
+                                                    formik.values._inspectionReport.inspectionCategories[
+                                                      inspectionCategoryIndex
+                                                    ].inspectionArticles[
+                                                      inspectionArticleIndex
+                                                    ] as InspectionArticleCategory
+                                                  ).fields[fieldIndex].templateValues[certificate._inspectionCheckType!]
+                                                    .comments
+                                                }
+                                              />
+                                            </Stack>
+                                          ) : (
+                                            <Stack
+                                              style={{ width: '300px', textAlign: 'center' }}
+                                              spacing={1}
+                                              flexGrow={1}
+                                            ></Stack>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+                                    </Stack>
+                                  ))}
+                                </AccordionDetails>
+                              )}
+                            </Accordion>
+                          );
+                        } else {
+                          const _inspectionArticle = inspectionArticle as InspectionArticleField;
+                          return (
                             <Stack
-                              key={`${inspectionArticle.articleNumber}-${field.description}`}
+                              key={`${_inspectionArticle.articleNumber}-${_inspectionArticle.description}`}
                               direction={'column'}
                               alignItems={'flex-start'}
+                              spacing={2}
+                              sx={{ marginBottom: '15px' }}
                             >
-                              <Stack direction="row" spacing={2} margin={2} alignItems="center">
-                                {inspectionArticle.fields.length === 1 && (
-                                  <Typography
-                                    variant="h6"
-                                    sx={{ visibility: inspectionArticle.fields.length === 1 ? 'visible' : 'hidden' }}
-                                  >
-                                    {inspectionArticle.articleNumber}
-                                  </Typography>
-                                )}
-                                <Typography variant="h6">{field.description}</Typography>
+                              <Stack direction="row" spacing={2} alignItems="center">
+                                <Typography variant="h6">
+                                  {_inspectionArticle.articleNumber} {_inspectionArticle.description}
+                                </Typography>
                               </Stack>
-                              <Stack direction={'row'}>
-                                <Stack marginBottom={0} marginLeft={2}>
-                                  <FormHelperText>Τύπος Ελέγχου</FormHelperText>
-                                  <FormControl sx={{ minWidth: 110 }}>
-                                    <Select
-                                      labelId="demo-simple-select-autowidth-label"
-                                      {...getFieldProps(
-                                        `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].inspectionType`,
-                                      )}
-                                      value={
-                                        (
-                                          formik.values._inspectionReport.inspectionCategories[inspectionCategoryIndex]
-                                            .inspectionArticles[inspectionArticleIndex].fields[
-                                            fieldIndex
-                                          ] as InspectionArticleField
-                                        ).inspectionType
-                                      }
-                                      onChange={(event) =>
-                                        setFieldValue(
-                                          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].inspectionType`,
-                                          event.target.value,
-                                        )
-                                      }
-                                      autoWidth
-                                    >
-                                      {Object.keys(InspectionType).map((inspectionTypeValue) => (
-                                        <MenuItem
-                                          key={inspectionTypeValue}
-                                          value={InspectionType[inspectionTypeValue as keyof typeof InspectionType]}
-                                        >
-                                          {InspectionType[inspectionTypeValue as keyof typeof InspectionType]}
-                                        </MenuItem>
-                                      ))}
-                                    </Select>
-                                  </FormControl>
-                                </Stack>
-                                <Stack marginBottom={2} marginLeft={2}>
-                                  <FormHelperText>Είδος Ελέγχου</FormHelperText>
-                                  <FormControl sx={{ minWidth: 85 }}>
-                                    <Select
-                                      labelId="demo-simple-select-autowidth-label"
-                                      {...getFieldProps(
-                                        `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].inspectionKind`,
-                                      )}
-                                      value={
-                                        (
-                                          formik.values._inspectionReport.inspectionCategories[inspectionCategoryIndex]
-                                            .inspectionArticles[inspectionArticleIndex].fields[
-                                            fieldIndex
-                                          ] as InspectionArticleField
-                                        ).inspectionKind
-                                      }
-                                      onChange={(event) =>
-                                        setFieldValue(
-                                          `_inspectionReport.inspectionCategories[${inspectionCategoryIndex}].inspectionArticles[${inspectionArticleIndex}].fields[${fieldIndex}].inspectionKind`,
-                                          event.target.value,
-                                        )
-                                      }
-                                      autoWidth
-                                    >
-                                      {Object.keys(InspectionKind).map((inspectionKindValue) => (
-                                        <MenuItem
-                                          key={inspectionKindValue}
-                                          value={InspectionKind[inspectionKindValue as keyof typeof InspectionKind]}
-                                        >
-                                          {InspectionKind[inspectionKindValue as keyof typeof InspectionKind]}
-                                        </MenuItem>
-                                      ))}
-                                    </Select>
-                                  </FormControl>
-                                </Stack>
-                              </Stack>
+
+                              <Grid container direction={'row'} width={'100%'} columnGap={4} rowGap={2}>
+                                <Grid
+                                  item
+                                  alignItems={'center'}
+                                  md={'auto'}
+                                  paddingLeft={0}
+                                  columnGap={8}
+                                  display={'flex'}
+                                  flexDirection={'row'}
+                                  justifyContent={'space-between'}
+                                >
+                                  <Stack direction={'column'} spacing={2} maxWidth={100}>
+                                    <Stack spacing={1}>
+                                      <FormHelperText>Τύπος Ελέγχου</FormHelperText>
+                                      <Typography
+                                        sx={{
+                                          textAlign: 'center',
+                                          padding: '6px',
+                                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                                        }}
+                                        variant="h6"
+                                      >
+                                        {_inspectionArticle.inspectionType}
+                                      </Typography>
+                                    </Stack>
+                                    <Stack spacing={1}>
+                                      <FormHelperText>Είδος Ελέγχου</FormHelperText>
+                                      <Typography
+                                        sx={{
+                                          textAlign: 'center',
+                                          padding: '6px',
+                                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                                        }}
+                                        variant="h6"
+                                      >
+                                        {_inspectionArticle.inspectionKind}
+                                      </Typography>
+                                    </Stack>
+                                  </Stack>
+
+                                  <Stack spacing={1}>
+                                    <FormHelperText>Αξιολόγηση</FormHelperText>
+                                    <FormControl margin="dense">
+                                      <RadioGroup
+                                        row
+                                        aria-label="inspectionFieldEvaluation"
+                                        value={
+                                          (
+                                            formik.values._inspectionReport.inspectionCategories[
+                                              inspectionCategoryIndex
+                                            ].inspectionArticles[inspectionArticleIndex] as InspectionArticleField
+                                          ).templateValues[certificate._inspectionCheckType!].value
+                                        }
+                                        onChange={handleEvaluationChange(
+                                          inspectionCategoryIndex,
+                                          inspectionArticleIndex,
+                                        )}
+                                        name="inspectionFieldEvaluation"
+                                        id="inspectionFieldEvaluation"
+                                      >
+                                        <FormControlLabel
+                                          value={InspectionArticleFieldValue.OK}
+                                          control={<Radio color="success" />}
+                                          label={InspectionArticleFieldValue.OK}
+                                        />
+                                        <FormControlLabel
+                                          value={InspectionArticleFieldValue.NOT_OK}
+                                          control={<Radio color="error" />}
+                                          label={InspectionArticleFieldValue.NOT_OK}
+                                        />
+                                        <FormControlLabel
+                                          value={InspectionArticleFieldValue.NA}
+                                          control={<Radio color="secondary" />}
+                                          label={InspectionArticleFieldValue.NA}
+                                        />
+                                      </RadioGroup>
+                                    </FormControl>
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6} alignContent={'center'} paddingLeft={0}>
+                                  {(
+                                    formik.values._inspectionReport.inspectionCategories[inspectionCategoryIndex]
+                                      .inspectionArticles[inspectionArticleIndex] as InspectionArticleField
+                                  ).templateValues[certificate._inspectionCheckType!].value !==
+                                  InspectionArticleFieldValue.NA ? (
+                                    <Stack spacing={1}>
+                                      <FormHelperText>Παρατηρήσεις</FormHelperText>
+                                      <ReactQuill
+                                        style={{ minWidth: '300px' }}
+                                        modules={{
+                                          toolbar: [['bold', 'italic', 'underline', 'strike']],
+                                        }}
+                                        onChange={handleCommentsChange(inspectionCategoryIndex, inspectionArticleIndex)}
+                                        value={
+                                          (
+                                            formik.values._inspectionReport.inspectionCategories[
+                                              inspectionCategoryIndex
+                                            ].inspectionArticles[inspectionArticleIndex] as InspectionArticleField
+                                          ).templateValues[certificate._inspectionCheckType!].comments
+                                        }
+                                      />
+                                    </Stack>
+                                  ) : (
+                                    <Stack
+                                      style={{ width: '300px', textAlign: 'center' }}
+                                      spacing={1}
+                                      flexGrow={1}
+                                    ></Stack>
+                                  )}
+                                </Grid>
+                              </Grid>
                             </Stack>
                           );
-                        });
+                        }
                       })}
                     </AccordionDetails>
                   )}

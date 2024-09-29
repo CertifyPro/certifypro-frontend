@@ -35,6 +35,7 @@ const CertificationsCreatePage: React.FC = () => {
     },
     onSubmit: async (data) => {
       const newCertificate = new Certificate(data.certificateType, data.certificateCategory, data.inspectionCheckType);
+
       await addCertificate(newCertificate)
         .then(() => {
           navigate('/certifications/all');
