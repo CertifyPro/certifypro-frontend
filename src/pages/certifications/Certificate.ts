@@ -1,4 +1,4 @@
-import { getTemplateFieldValue } from './CertificateTemplates';
+import { getTemplateFieldValue } from './LiftingMachineCertificates';
 
 export enum InspectionType {
   AA = 'ΑΑ',
@@ -59,6 +59,7 @@ export enum CertificateType {
 
 export enum CertificateCategory {
   LIFTING_MACHINE_PAPAGALAKI = 'ΓΕΡΑΝΟΣ ΕΠΙ ΟΧΗΜΑΤΟΣ - ΠΑΠΑΓΑΛΑΚΙ',
+  ELECTRIC_CHAIN_HOIST_WITH_SUSPENSION_BRACKET = 'ELECTRIC CHAIN HOIST WITH SUSPENSION BRACKET',
 }
 
 class Certificate {
@@ -691,7 +692,7 @@ class Certificate {
               articleNumber: '2.',
               description: 'ΣΤΟΙΧΕΙΑ ΟΧΗΜΑΤΟΣ, ΣΗΜΑΝΣΗ, ΠΡΟΕΙΔΟΠΟΙΗΤΙΚΑ',
               inspectionType: InspectionType.AA_AB,
-              inspectionKind: InspectionKind.L,
+              inspectionKind: InspectionKind.O,
               ...getTemplateFieldValue(category, '1.1', inspectionCheckType),
             },
             {

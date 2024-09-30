@@ -74,9 +74,11 @@ const CertificationsCreatePage: React.FC = () => {
                         value={formik.values.certificateCategory}
                         onChange={formik.handleChange}
                       >
-                        <MenuItem value={CertificateCategory.LIFTING_MACHINE_PAPAGALAKI}>
-                          ΓΕΡΑΝΟΣ ΕΠΙ ΟΧΗΜΑΤΟΣ - ΠΑΠΑΓΑΛΑΚΙ
-                        </MenuItem>
+                        {Object.values(CertificateCategory).map((certificateCategory) => (
+                          <MenuItem key={certificateCategory} value={certificateCategory}>
+                            {certificateCategory}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </Stack>
